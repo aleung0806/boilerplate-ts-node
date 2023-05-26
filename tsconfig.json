@@ -1,0 +1,17 @@
+{
+  "compilerOptions":{
+    "noImplicitAny": false,
+    "outDir": "./build",
+    "allowJs": true,
+    "module": "commonjs",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true
+  },
+  "include": [
+  "./src/**/*"
+]
+}

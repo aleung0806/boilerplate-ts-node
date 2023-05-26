@@ -49,6 +49,11 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.1",
+    "@types/lodash": "^4.14.195",
+    "@types/mongoose": "^5.11.97",
+    "@types/react": "^18.2.7",
     "jest": "^29.5.0",
     "prettier": "2.8.8",
     "supertest": "^6.3.3"
