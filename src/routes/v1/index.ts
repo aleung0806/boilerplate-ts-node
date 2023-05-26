@@ -1,7 +1,6 @@
 import express from 'express';
 import authRouter from './auth.route';
 import userRouter from './user.route';
-import testRouter from './test.route';
 
 const router = express.Router();
 
@@ -14,10 +13,10 @@ const routes = [
     path: '/users',
     route: userRouter,
   },
-  {
-    path: '/test',
-    route: testRouter
-  }
+  // {
+  //   path: '/test',
+  //   route: testRouter
+  // }
 ];
 
 routes.forEach((route) => {
@@ -25,4 +24,4 @@ routes.forEach((route) => {
 });
 
 console.log(router)
-module.exports = router;
+export default router

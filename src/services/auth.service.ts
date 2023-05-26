@@ -12,6 +12,6 @@ const verify = async (email, password) => {
   throw new ApiError(StatusCodes.UNAUTHORIZED, 'Incorrect email or password')
 }
 
-module.exports = {
+export default {
   verify
 }

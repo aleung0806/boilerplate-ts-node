@@ -42,15 +42,13 @@ const updateRoleById = async (id, role) => {
   return User.findByIdAndUpdate(id, role, {new: true})
 }
 
-module.exports = {
-  create,
+export default {
+  create, 
+  getAll,
+  deleteAll,
   getById,
   getByEmail,
-  getAll,
   updateById,
   deleteById,
-  deleteAll,
-};
-
-
-
+  updateRoleById
+}

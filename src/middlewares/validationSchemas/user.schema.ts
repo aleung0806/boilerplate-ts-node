@@ -46,8 +46,9 @@ const updateRoleById = {
   })
 }
 
-module.exports = {
-  create,
+
+export default {
+  create, 
   getAll,
   deleteAll,
   getById,

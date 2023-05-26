@@ -3,7 +3,7 @@ import service from "../services/user.service";
 import { StatusCodes } from 'http-status-codes'
 import logger from '../utils/logger'
 import passport from 'passport';
-import LocalStrategy from 'passport-local'.Strategy;
+// import LocalStrategy from 'passport-local.Strategy';
 
 import userService from '../services/user.service'
 
@@ -43,12 +43,12 @@ const updateRoleById = async (req, res, next) => {
   res.status(StatusCodes.OK).send({user})
 }
 
-module.exports = {
+export default {
+  create, 
   getAll,
-  create,
   deleteAll,
   getById,
   updateById,
   deleteById,
-  updateRoleById,
-};
+  updateRoleById
+}

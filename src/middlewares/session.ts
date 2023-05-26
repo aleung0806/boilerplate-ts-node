@@ -25,4 +25,4 @@ const log = (req, res, next) => {
 
 
 
-module.exports = [session, log]
+export default [session, log]

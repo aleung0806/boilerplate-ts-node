@@ -5,11 +5,12 @@
     "allowJs": true,
     "module": "commonjs",
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false, //change
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
   },
   "include": [
   "./src/**/*"

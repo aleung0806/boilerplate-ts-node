@@ -9,4 +9,4 @@ router.route("/roles/:id")
   .put(validate(userSchema.updateRoleById), authorize(['admin']), userController.updateRoleById)
 
 
-module.exports = router;
+export default router

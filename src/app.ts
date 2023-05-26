@@ -42,4 +42,4 @@ app.use('/v1', testRouter);
 app.use(errorHandler)
 
 
-module.exports = app;
+export default app;

@@ -5,7 +5,7 @@ import ApiError from '../utils/ApiError'
 
 const validate = (schema) => (req, res, next) => {
   const values = {}
-  const errors = []
+  const errors: Array<Error> = []
   Object.keys(schema).forEach(key => {
     const { value, error } = schema[key].validate(req[key], {abortEarly: false})
     logger.debug(`key: ${key}`)
@@ -20,4 +20,4 @@ const validate = (schema) => (req, res, next) => {
   return next();
 };
 
-module.exports = validate
+export default validate

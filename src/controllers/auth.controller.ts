@@ -5,28 +5,28 @@ import authService from "../services/auth.service";
 import { StatusCodes } from 'http-status-codes'
 import logger from '../utils/logger'
 import passport from 'passport';
-import LocalStrategy from 'passport-local'.Strategy;
+// import LocalStrategy from 'passport-local'.Strategy;
 
-const register = async (req, res, next) => {
+export const register = async (req, res, next) => {
   const user = await userService.create(req.body)
   res.status(StatusCodes.CREATED).send({user})
 };
 
-const login = async (req, res, next) => {
+export const login = async (req, res, next) => {
   const { email, password } = req.body
   const user = await authService.verify(email, password);
   req.session.user = user
   res.status(StatusCodes.OK).send({user})
 };
 
-const logout = async (req, res, next) => {
+export const logout = async (req, res, next) => {
   const { email, password } = req.body
   const user = await authService.verify(email, password);
   await req.session.destroy()
   res.status(StatusCodes.OK).send('user is logged out')
 };
 
-const verify = async (req, res, next) => {
+export const verify = async (req, res, next) => {
   if(req.session === null){
     res.status(StatusCodes.OK)
   }else{
@@ -69,9 +69,9 @@ const verify = async (req, res, next) => {
 //   }
 // };
 
-module.exports = {
+export default {
   register,
   login,
   logout,
-  verify,
-};
+  verify
+}

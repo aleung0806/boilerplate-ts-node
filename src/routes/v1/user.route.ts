@@ -21,4 +21,4 @@ router.route("/users/:id/role")
 
 
 
-module.exports = router;
+export default router

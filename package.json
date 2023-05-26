@@ -2,16 +2,16 @@
   "name": "node-boilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon src/index.js",
-    "migrate": "npx knex migrate:latest --knexfile db/knexfile.js",
-    "dev": "nodemon index.js",
+    "start": "nodemon src/index.ts",
+    "migrate": "npx knex migrate:latest --knexfile db/knexfile.ts",
+    "dev": "nodemon index.ts",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "docker:dev": "sudo docker-compose -f docker-compose.yml up"
   },
   "jest": {
-    "globalTeardown": "./src/utils/tests/teardown.js"
+    "globalTeardown": "./src/utils/tests/teardown.ts"
   },
   "keywords": [],
   "author": "",

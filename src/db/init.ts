@@ -1,15 +1,15 @@
-import mongoose from 'mongoose'
-import User from '../models/user'
+// import mongoose from 'mongoose'
+// import User from '../models/user'
 
-const users = [
+// const users = [
 
-]
+// ]
 
-const initTestDb = async () => {
-  await User.deleteMany({})
-}
+// const initTestDb = async () => {
+//   await User.deleteMany({})
+// }
 
-module.exports = {
-  initTestDb
-}
+// module.exports = {
+//   initTestDb
+// }
 

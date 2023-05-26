@@ -1,9 +1,11 @@
-import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt'
 import config from '../config/config';
-import { redis } from '../config/config';
+// import { redis } from '../config/config';
 
-const userSchema = mongoose.Schema(
+import User from '../types/User'
+
+const userSchema = new Schema<User>(
     {
       username: {
         type: String, 
@@ -65,8 +67,7 @@ userSchema.pre('save', async function (next) {
   user.email = user.email.toLowerCase()
 })
 
-const User = mongoose.model('User', userSchema)
+const User = model<User>('User', userSchema)
 
-
-module.exports = User;
+export default User;
 

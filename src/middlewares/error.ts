@@ -6,4 +6,4 @@ const error = (err, req, res, next) => {
   res.status(statusCode).send(message)
 };
 
-module.exports = error;
+export default error

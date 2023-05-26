@@ -23,8 +23,6 @@ const logout = {
   })
 }
 
-module.exports = {
-  register,
-  login,
-  logout,
+export default {
+  register, login, logout
 }

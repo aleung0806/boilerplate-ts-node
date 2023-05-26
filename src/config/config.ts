@@ -5,7 +5,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 const env = process.env
 const testEnv = env.NODE_ENV === 'test'
 
-module.exports = {
+export default {
   env: env.NODE_ENV,
   port: env.PORT, 
   mongoose: {

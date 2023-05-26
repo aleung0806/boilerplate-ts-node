@@ -2,7 +2,7 @@ import logger from "../utils/logger"
 import userService from '../services/user.service'
 import ApiError from '../utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
-import permissions from '../config/roles'
+// import permissions from '../config/roles'
 
 const authorize = (roles) => async (req, res, next) => {
   if (!req.session.user){
@@ -30,4 +30,4 @@ const authorize = (roles) => async (req, res, next) => {
 
 }
 
-module.exports = authorize
+export default authorize

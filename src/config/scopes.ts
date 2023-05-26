@@ -1,7 +1,7 @@
-const scopes = {
+// const scopes = {
 
-}
+// }
 
-module.exports = {
+// module.exports = {
   
-}
+// }

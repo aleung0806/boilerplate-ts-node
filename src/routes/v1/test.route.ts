@@ -1,14 +1,14 @@
-import express from 'express'
-import testController from '../../controllers/test.controller'
+// import express from 'express'
+// import testController from '../../controllers/test.controller'
 
 
-const router = express.Router()
+// const router = express.Router()
 
 
-router.get('/test', testController.test)
+// router.get('/test', testController.test)
 
-// router.post('/logout', logout)
-// router.get('/verify', verify)
+// // router.post('/logout', logout)
+// // router.get('/verify', verify)
 
 
-module.exports = router
+// export default router

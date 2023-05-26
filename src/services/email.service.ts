@@ -25,6 +25,6 @@ const sendEmail = async (email, subject, text) => {
   await transport.sendMail(message);
 }
 
-module.exports = {
+export default {
   sendEmail
 }
