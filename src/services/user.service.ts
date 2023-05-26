@@ -31,7 +31,7 @@ const updateById = async (id, update) => {
 }
 
 const deleteById = async (id) => {
-  return User.delete({id})
+  return User.deleteOne({id})
 }
 
 const deleteAll = async () => {

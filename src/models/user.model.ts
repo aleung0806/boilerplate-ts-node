@@ -45,12 +45,12 @@ const userSchema = new Schema<User>(
     }
 )
 
-userSchema.statics.emailExists = async function (email) {
+userSchema.statics.emailExists = async function (email:string):Promise<boolean> {
   const user = await this.findOne({email: email})
   return !!user
 }
 
-userSchema.methods.passwordMatches = async function (password) {
+userSchema.methods.passwordMatches = async function (password:string):Promise<string> {
   const user = this
   return await bcrypt.compare(password, user.password)
 }

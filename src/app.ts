@@ -15,7 +15,7 @@ import authRouter from "./routes/v1/auth.route";
 import userRouter from './routes/v1/user.route';
 import roleRouter from './routes/v1/roles.route';
 import docsRouter from './routes/v1/docs.route';
-import testRouter from "./routes/v1/test.route";
+// import testRouter from "./routes/v1/test.route";
 
 const app = express();
 app.use(helmet());
@@ -37,7 +37,7 @@ app.use('/v1', authRouter);
 app.use('/v1', userRouter);
 app.use('/v1', roleRouter);
 app.use('/v1', docsRouter);
-app.use('/v1', testRouter);
+// app.use('/v1', testRouter);
 
 app.use(errorHandler)
 

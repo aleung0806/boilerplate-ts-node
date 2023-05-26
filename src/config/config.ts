@@ -10,8 +10,8 @@ export default {
   port: env.PORT, 
   mongoose: {
     url: testEnv 
-      ? env.MONGODB_TEST_URL
-      : env.MONGODB_URL
+      ? env.MONGODB_TEST_URL!
+      : env.MONGODB_URL!
   },
   jwt: {
     secret: env.JWT_SECRET
