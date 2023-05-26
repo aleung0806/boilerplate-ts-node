@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    image: node-app
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
+    ports: 
+      - '3000:3000'
+  mongo:
+    image: mongo:jammy
+    ports:
+      - 27017:27017
+  redis:
+    image: redis:7.2-rc1-alpine
+    ports:
+      - '6379:6379'
+
+
+

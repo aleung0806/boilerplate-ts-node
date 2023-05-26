@@ -1,0 +1,8 @@
+PATCH http://localhost:3000/v1/users/64532db7a14beb4460975d62 HTTP/1.1
+content-type: application/json
+
+{
+  "email": "user3@email.com",
+  "username": "news name 22",
+  "roles": [ "admin" ]
+} 
