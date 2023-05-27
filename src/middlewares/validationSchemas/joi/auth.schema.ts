@@ -1,9 +1,5 @@
 import { string } from 'joi';
-import * as z from 'zod'
-
-interface register {
-  
-}
+import Joi from 'joi';
 
 const register = {
   body: Joi.object({
