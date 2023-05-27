@@ -1,9 +1,9 @@
 import logger from '../utils/logger';
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
+import { Middleware } from '../types/Middleware'
 
-
-const validate = (schema) => (req, _res, next) => {
+const validate = (schema: object): Middleware => (req, _res, next) => {
   const values = {}
   const errors: Array<Error> = []
   Object.keys(schema).forEach(key => {
@@ -16,8 +16,8 @@ const validate = (schema) => (req, _res, next) => {
     const message = errors.join('. ')
     return next(new ApiError(StatusCodes.BAD_REQUEST, message))
   }
-  req.values = values
-  
+  //req.values = values
+
   return next();
 };
 

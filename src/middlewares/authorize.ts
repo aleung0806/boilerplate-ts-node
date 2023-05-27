@@ -2,9 +2,11 @@ import logger from "../utils/logger"
 import userService from '../services/user.service'
 import ApiError from '../utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
+import { Role } from '../types/Role'
+import { Middleware } from '../types/Middleware'
 // import permissions from '../config/roles'
 
-const authorize = (roles) => async (req, _res, next) => {
+const authorize = (roles: Array<Role>): Middleware => async (req, _res, next) => {
   if (!req.session.user){
     return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
   }

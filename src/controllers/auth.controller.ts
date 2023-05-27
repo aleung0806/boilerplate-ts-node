@@ -8,6 +8,7 @@ import passport from 'passport';
 
 import { Request, Response, NextFunction} from 'express'
 import { Middleware } from "src/types/Middleware";
+import ApiError from "../utils/ApiError";
 // import LocalStrategy from 'passport-local'.Strategy;
 
 export const register: Middleware = async (req, res, _next) => {
@@ -22,11 +23,14 @@ export const login: Middleware = async (req, res, _next) => {
   res.status(StatusCodes.OK).send({user})
 };
 
-export const logout: Middleware = async (req, res, _next) => {
-
+export const logout: Middleware = async (req, res, next) => {
   const { email, password } = req.body
   const user = await authService.verify(email, password);
-  await req.session.destroy()
+  req.session.destroy((error) => {
+    if (error) {
+      return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
+    }
+  })
   res.status(StatusCodes.OK).send('user is logged out')
 };
 

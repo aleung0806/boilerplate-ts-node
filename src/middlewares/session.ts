@@ -5,6 +5,13 @@ import ApiError from "../utils/ApiError";
 import logger from "../utils/logger";
 import { StatusCodes } from 'http-status-codes'
 import { Middleware } from '../types/Middleware'
+import { User } from '../types/User'
+
+declare module 'express-session' {
+  interface SessionData {
+    user?: User | null;
+  }
+}
 
 const session = expressSession({
   store: redisStore,
