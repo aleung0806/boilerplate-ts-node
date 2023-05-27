@@ -1,9 +1,11 @@
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
-import userService from './user.service'
+import { User } from '../types/User'
+import UserModel from '../models/user.model'
 
-const verify = async (email, password) => {
-  const user = await userService.getByEmail(email)
+const verify = async (email: string, password: string): Promise<User> => {
+  const user = await UserModel.findOne({email})
+
   if (user){
     if (await user.passwordMatches(password)){
       return user

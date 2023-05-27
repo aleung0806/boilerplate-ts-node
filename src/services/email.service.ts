@@ -15,7 +15,7 @@ transport
   .then(() => logger.info('connected to email server'))
   .catch((err) => logger.error(`Unable to connect to email server. ${err}`));
 
-const sendEmail = async (email, subject, text) => {
+const sendEmail = async (email:string, subject:string, text:string) => {
   let message = {
     from: config.email.username,
     to: email,

@@ -14,5 +14,4 @@ router.post('/logout', validate(authSchema.logout), authController.logout)
 // router.post('/logout', logout)
 router.get('/verify', authController.verify)
 
-
-module.exports = router
+export default router

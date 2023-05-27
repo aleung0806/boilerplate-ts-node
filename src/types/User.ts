@@ -1,6 +1,10 @@
-export default interface User {
+export interface User {
   username: string,
   email: string,
-  password: string,
   roles: Array<string>
 }
+
+export interface UserDb extends User {
+  password: string
+}
+

@@ -1,11 +1,23 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Model, Document, model } from 'mongoose';
 import bcrypt from 'bcrypt'
 import config from '../config/config';
 // import { redis } from '../config/config';
 
-import User from '../types/User'
+import { UserDb }from '../types/User'
 
-const userSchema = new Schema<User>(
+
+interface UserMethods {
+  passwordMatches(password:string):Promise<string>
+}
+
+//Model type parameters: DocType, QueryHelpers, Methods
+//Statics do not have an explicit parameter
+interface UserModel extends Model<UserDb, {}, UserMethods> {
+  emailExists(email:string):Promise<boolean>
+}
+
+//Schema type parameters: DocType, Mongoose model type, TInstanceMethods, TQueryHelpers
+const userSchema = new Schema<UserDb, UserModel, UserMethods>(
     {
       username: {
         type: String, 
@@ -67,7 +79,8 @@ userSchema.pre('save', async function (next) {
   user.email = user.email.toLowerCase()
 })
 
-const User = model<User>('User', userSchema)
+
+const User = model<UserDb, UserModel>('User', userSchema)
 
 export default User;
 
