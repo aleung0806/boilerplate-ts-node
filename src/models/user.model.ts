@@ -45,7 +45,7 @@ const userSchema = new Schema<UserDb, UserModel, UserMethods>(
     {
       timestamps: true,
       'toJSON': {
-        transform: (doc, ret, options) => {
+        transform: (_doc, ret, _options) => {
           return {
             id: ret._id,
             username: ret.username,
@@ -67,7 +67,7 @@ userSchema.methods.passwordMatches = async function (password:string):Promise<st
   return await bcrypt.compare(password, user.password)
 }
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (_next) {
   //hash password
   let user = this;
   if (user.isModified('password')) {

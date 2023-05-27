@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
 
 
-const validate = (schema) => (req, res, next) => {
+const validate = (schema) => (req, _res, next) => {
   const values = {}
   const errors: Array<Error> = []
   Object.keys(schema).forEach(key => {
@@ -17,6 +17,7 @@ const validate = (schema) => (req, res, next) => {
     return next(new ApiError(StatusCodes.BAD_REQUEST, message))
   }
   req.values = values
+  
   return next();
 };
 

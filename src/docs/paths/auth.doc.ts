@@ -26,9 +26,9 @@ const register = {
     400: {
       description: 'Email is already in use.'
     },
-    400: {
-      description: 'Validation exception.'
-    }
+    // 400: {
+    //   description: 'Validation exception.'
+    // }
   }
 }
 
@@ -75,7 +75,7 @@ const logout = {
     }
 }
 
-module.exports = {
+export default {
   '/auth/register': {
     post: register
   },

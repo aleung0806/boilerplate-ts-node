@@ -5,28 +5,32 @@ import authService from "../services/auth.service";
 import { StatusCodes } from 'http-status-codes'
 import logger from '../utils/logger'
 import passport from 'passport';
+
+import { Request, Response, NextFunction} from 'express'
+import { Middleware } from "src/types/Middleware";
 // import LocalStrategy from 'passport-local'.Strategy;
 
-export const register = async (req, res, next) => {
+export const register: Middleware = async (req, res, _next) => {
   const user = await userService.create(req.body)
   res.status(StatusCodes.CREATED).send({user})
 };
 
-export const login = async (req, res, next) => {
+export const login: Middleware = async (req, res, _next) => {
   const { email, password } = req.body
   const user = await authService.verify(email, password);
   req.session.user = user
   res.status(StatusCodes.OK).send({user})
 };
 
-export const logout = async (req, res, next) => {
+export const logout: Middleware = async (req, res, _next) => {
+
   const { email, password } = req.body
   const user = await authService.verify(email, password);
   await req.session.destroy()
   res.status(StatusCodes.OK).send('user is logged out')
 };
 
-export const verify = async (req, res, next) => {
+export const verify: Middleware = async (req, res, _next) => {
   if(req.session === null){
     res.status(StatusCodes.OK)
   }else{

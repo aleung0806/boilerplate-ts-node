@@ -102,7 +102,7 @@ const deleteUserById = {
   }
 }
 
-module.exports = {
+export default {
   users: {
     post: createUser,
     get: getAllUsers,

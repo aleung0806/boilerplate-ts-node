@@ -4,7 +4,7 @@ import ApiError from '../utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 // import permissions from '../config/roles'
 
-const authorize = (roles) => async (req, res, next) => {
+const authorize = (roles) => async (req, _res, next) => {
   if (!req.session.user){
     return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
   }

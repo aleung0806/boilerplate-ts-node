@@ -1,4 +1,4 @@
-export const transform = (doc, ret, opt) => {
+export const transform = (_doc, ret, _opt) => {
   delete ret['password']
   delete ret['__v']
   return ret

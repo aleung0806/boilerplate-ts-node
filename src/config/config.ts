@@ -20,7 +20,7 @@ export default {
     url: env.REDIS_URL
   },
   session: {
-    secret: env.SESSION_SECRET
+    secret: env.SESSION_SECRET!
   },
   email: {
     username: env.SMTP_USERNAME,

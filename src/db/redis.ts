@@ -1,9 +1,12 @@
 import session from "express-session";
-import redis from 'redis'
-import _redisStore from "connect-redis";
+import * as redis from 'redis';
+import connectRedis from "connect-redis";
 
 import logger from '../utils/logger';
-import config from '../config/config'
+import config from '../config/config';
+
+
+const RedisStore = connectRedis(session);
 
 export const redisClient = redis.createClient({
   url: config.redis.url,
@@ -15,4 +18,4 @@ redisClient.connect().then(() => {
 });
 
 
-export const redisStore = new _redisStore({ client: redisClient })
+export const redisStore = new RedisStore({ client: redisClient })

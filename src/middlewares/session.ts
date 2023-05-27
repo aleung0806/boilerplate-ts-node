@@ -4,6 +4,7 @@ import { redisStore } from '../db/redis';
 import ApiError from "../utils/ApiError";
 import logger from "../utils/logger";
 import { StatusCodes } from 'http-status-codes'
+import { Middleware } from '../types/Middleware'
 
 const session = expressSession({
   store: redisStore,
@@ -16,7 +17,7 @@ const session = expressSession({
   },
 });
 
-const log = (req, res, next) => {
+const log: Middleware = (req, _res, next) => {
   if (req.session.user){
     logger.info(`session: ${JSON.stringify(req.session.user)}`)
   }

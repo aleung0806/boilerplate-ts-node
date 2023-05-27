@@ -43,7 +43,7 @@ const responses = {
   }
 }
 
-module.exports = {
+export default {
   schemas,
   responses
 }
