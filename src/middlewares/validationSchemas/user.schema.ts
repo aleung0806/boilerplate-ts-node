@@ -1,50 +1,52 @@
-import Joi from 'joi';
+import { zipObject } from 'lodash'
+import { z } from 'zod'
+import { UserSchema } from '../../types/User'
 
-const create = {
-  params: Joi.object({
-    id: Joi.string()
+
+const create = z.object({
+  params: z.object({
+    id: UserSchema.pick({id: true})
   }),
-  body: Joi.object({
-    email: Joi.string().email().required(),
-    username: Joi.string().required(),
-    password: Joi.string().required()
-  })
-}
+  body: UserSchema
+})
 
-const getAll = {}
+const getAll = z.object({
+  params: z.object({}),
+  body: z.object({})
+})
 
-const deleteAll = {}
+const deleteAll = z.object({
+  params: z.object({}),
+  body: z.object({})
+})
 
-const getById =  {
-  params: Joi.object({
-    id: Joi.string()
-  })
-}
-
-const updateById = {
-  params: Joi.object({
-    id: Joi.string()
+const getById = z.object({
+  params: z.object({
+    id: UserSchema.pick({id: true})
   }),
-  body: Joi.object({
-    email: Joi.string().email().required(),
-    username: Joi.string().required()
-  })
-}
+  body: z.object({})
+})
 
-const deleteById = {
-  params: Joi.object({
-    id: Joi.string()
-  })
-}
-
-const updateRoleById = {
-  params: Joi.object({
-    id: Joi.string()
+const updateById = z.object({
+  params: z.object({
+    id: UserSchema.pick({id: true})
   }),
-  body: Joi.object({
-    roles: Joi.array().items(Joi.string())
-  })
-}
+  body: UserSchema
+})
+
+const deleteById = z.object({
+  params: z.object({
+    id: UserSchema.pick({id: true})
+  }),
+  body: z.object({})
+})
+
+const updateRoleById = z.object({
+  params: z.object({
+    id: UserSchema.pick({id: true})
+  }),
+  body: UserSchema.pick({roles: true})
+})
 
 
 export default {

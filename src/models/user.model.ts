@@ -19,6 +19,7 @@ interface UserModel extends Model<UserDb, {}, UserMethods> {
 //Schema type parameters: DocType, Mongoose model type, TInstanceMethods, TQueryHelpers
 const userSchema = new Schema<UserDb, UserModel, UserMethods>(
     {
+      id: 'UUID',
       username: {
         type: String, 
         required: true,

@@ -1,31 +1,36 @@
 import { string } from 'joi';
-import * as z from 'zod'
+import { z }from 'zod'
+import { UserSchema } from '../../types/User'
 
-interface register {
-  
-}
 
-const register = {
-  body: Joi.object({
-    email: Joi.string().email().required(),
-    username: Joi.string().required(),
-    password: Joi.string().required()
-  })
-}
 
-const login = {
-  body: Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required()
-  })
-}
 
-const logout = {
-  body: Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required()
-  })
-}
+
+const register =  z.object({
+  params: z.object({}),
+  body: UserSchema.pick(({
+    email: true,
+    username: true,
+    password: true
+  }))
+})
+
+const login =  z.object({
+  params: z.object({}),
+  body: UserSchema.pick(({
+    email: true,
+    password: true
+  }))
+})
+
+
+const logout =  z.object({
+  params: z.object({}),
+  body: UserSchema.pick(({
+    email: true,
+    password: true
+  }))
+})
 
 export default {
   register, login, logout

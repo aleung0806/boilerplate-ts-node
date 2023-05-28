@@ -41,5 +41,4 @@ app.use('/v1', docsRouter);
 
 app.use(errorHandler)
 
-
 export default app;
