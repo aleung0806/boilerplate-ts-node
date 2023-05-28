@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import supertest from "supertest";
-import app from "../../app";
+import app from "../../src/app";
 const api = supertest(app);
-import User from '../../models/user.model'
-import config from '../../config/config'
+import User from '../../src/models/user.model'
+import config from '../../src/config/config'
 
 const user1 = {
   email: 'user1@test.com',

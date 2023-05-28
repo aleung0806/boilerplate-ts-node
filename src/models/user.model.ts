@@ -2,9 +2,7 @@ import { Schema, Model, Document, model } from 'mongoose';
 import bcrypt from 'bcrypt'
 import config from '../config/config';
 // import { redis } from '../config/config';
-
 import { UserDb }from '../types/User'
-
 
 interface UserMethods {
   passwordMatches(password:string):Promise<string>

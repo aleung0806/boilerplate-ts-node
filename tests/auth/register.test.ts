@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import supertest from "supertest";
-import app from "../../app";
+import app from "../../src/app";
 const api = supertest(app);
-import User from '../../models/user.model'
-import config from '../../config/config'
-import { redisClient } from '../../db/redis'
+import User from '../../src/models/user.model'
+import config from '../../src/config/config'
+import { redisClient } from '../../src/db/redis'
 
 const user1 = {
   email: 'user1@test.com',
@@ -34,8 +34,9 @@ describe('POST /v1/register', () => {
       
     expect(res.body.user).toEqual({
       id: expect.anything(),
-      email: user1.email,
-      username: user1.username
+      email: user2.email,
+      username: user2.username,
+      roles: ["user"]
     })
 
   })
@@ -47,12 +48,14 @@ describe('POST /v1/register', () => {
 
     const dbUser = await User.findOne({email: user1.email})
     expect(dbUser).toEqual(
-      expect.objectContaining({
+     {
         id: expect.anything(),
         email: user1.email,
         username: user1.username,
-        password: expect.not.stringMatching(user1.password)
-      })
+        password: expect.not.stringMatching(user1.password),
+        roles: ["user"]
+
+      }
     )
   })
 

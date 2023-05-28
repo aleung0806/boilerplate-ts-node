@@ -2,10 +2,6 @@ import { string } from 'joi';
 import { z }from 'zod'
 import { UserSchema } from '../../types/User'
 
-
-
-
-
 const register =  z.object({
   params: z.object({}),
   body: UserSchema.pick(({

@@ -1,7 +1,8 @@
 {
+  "exclude": ["./dist", "__tests__", "jest.config.js"],
   "compilerOptions":{
     "noImplicitAny": false,
-    "outDir": "./build",
+    "outDir": "./dist",
     "allowJs": true,
     "module": "commonjs",
     "strict": true,
@@ -11,6 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "baseUrl": "./",
+    "moduleResolution": "node",
   },
   "include": [
   "./src/**/*"
