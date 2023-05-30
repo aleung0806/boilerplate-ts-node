@@ -9,7 +9,6 @@ import passport from 'passport';
 import { Request, Response, NextFunction} from 'express'
 import { Middleware } from "src/types/Middleware";
 import ApiError from "../utils/ApiError";
-// import LocalStrategy from 'passport-local'.Strategy;
 
 export const register: Middleware = async (req, res, _next) => {
   const user = await userService.create(req.body)
@@ -17,10 +16,10 @@ export const register: Middleware = async (req, res, _next) => {
 };
 
 export const login: Middleware = async (req, res, _next) => {
-  const { email, password } = req.body
-  const user = await authService.verifyEmailPassword(email, password);
-  req.session.user = user
-  res.status(StatusCodes.OK).send({user})
+  // const { email, password } = req.body
+  // const user = await authService.verifyEmailPassword(email, password);
+  // req.session.user = user
+  // res.status(StatusCodes.OK).send({user})
 };
 
 export const logout: Middleware = async (req, res, next) => {

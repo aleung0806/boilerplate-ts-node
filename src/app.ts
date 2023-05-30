@@ -28,10 +28,12 @@ app.use(compression());
 app.use(cors());
 app.options('*', cors());
 
+
 app.use(morgan)
-app.use(sessionHandler)
+// app.use(sessionHandler)
+
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 app.post('/v1/passport-login', passport.authenticate('local'));
 
 app.use('/v1', authRouter);
