@@ -7,7 +7,7 @@ import config from '../../src/config/config'
 import { redisClient } from '../../src/db/redis';
 import logger from "../../src/utils/logger";
 
- const user1 =  {
+const user1 =  {
   email: 'user1@test.com',
   username: 'user1',
   password: 'password'
@@ -129,7 +129,6 @@ describe('/v1/users', () => {
         )
       }
     }) 
-    
   })
 
   describe('DELETE /v1/users', () => {

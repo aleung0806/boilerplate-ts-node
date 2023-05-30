@@ -6,6 +6,7 @@ import xss from 'xss-clean';
 import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 import cors from 'cors';
+import passport from 'passport'
 
 import errorHandler from './middlewares/error'
 import morgan from './middlewares/morgan'
@@ -29,9 +30,9 @@ app.options('*', cors());
 
 app.use(morgan)
 app.use(sessionHandler)
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.post('/v1/passport-login', passport.authenticate('local'));
+app.use(passport.initialize());
+app.use(passport.session());
+app.post('/v1/passport-login', passport.authenticate('local'));
 
 app.use('/v1', authRouter);
 app.use('/v1', userRouter);

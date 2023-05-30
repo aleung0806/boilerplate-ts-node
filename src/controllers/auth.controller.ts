@@ -18,20 +18,20 @@ export const register: Middleware = async (req, res, _next) => {
 
 export const login: Middleware = async (req, res, _next) => {
   const { email, password } = req.body
-  const user = await authService.verify(email, password);
+  const user = await authService.verifyEmailPassword(email, password);
   req.session.user = user
   res.status(StatusCodes.OK).send({user})
 };
 
 export const logout: Middleware = async (req, res, next) => {
-  const { email, password } = req.body
-  const user = await authService.verify(email, password);
-  req.session.destroy((error) => {
-    if (error) {
-      return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
-    }
-  })
-  res.status(StatusCodes.OK).send('user is logged out')
+  // const { email, password } = req.body
+  // if (req.session){
+  // req.session.destroy((error) => {
+  //   if (error) {
+  //     return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
+  //   }
+  // })
+  // res.status(StatusCodes.OK).send('user is logged out')
 };
 
 export const verify: Middleware = async (req, res, _next) => {

@@ -3,7 +3,7 @@ import ApiError from '../utils/ApiError'
 import { User } from '../types/User'
 import UserModel from '../models/user.model'
 
-const verify = async (email: string, password: string): Promise<User> => {
+const verifyEmailPassword = async (email: string, password: string): Promise<User> => {
   const user = await UserModel.findOne({email})
 
   if (user){
@@ -15,5 +15,5 @@ const verify = async (email: string, password: string): Promise<User> => {
 }
 
 export default {
-  verify
+  verifyEmailPassword
 }
