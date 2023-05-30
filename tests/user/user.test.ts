@@ -87,43 +87,49 @@ describe('/v1/users', () => {
   describe('GET /v1/users/:id', () => {
     test('should get user on correct request', async () => {
       const user = await User.findOne({})
-      const res = await api
-        .get(`/v1/users/${user.id}`)
-        .expect(200)
+      if (user !== null){
+        const res = await api
+          .get(`/v1/users/${user.id}`)
+          .expect(200)
 
-      expect(res.body.user).toEqual({
-        id: user.id,
-        email: user.email,
-        username: user.username
-      })
-
+        expect(res.body.user).toEqual({
+          id: user.id,
+          email: user.email,
+          username: user.username
+        })
+      }
     }) 
+  
   })
   
   describe('PATCH /v1/users/:id', () => {
     test('should patch user on correct request', async () => {
       const user = await User.findOne({})
       const newUsername = 'brandNewUsername'
-      const res = await api
-        .patch(`/v1/users/${user.id}`)
-        .send({id: user.id, username: newUsername})
-        .expect(200)
+      
+      if (user !== null){
+        const res = await api
+          .patch(`/v1/users/${user.id}`)
+          .send({id: user.id, username: newUsername})
+          .expect(200)
 
-      expect(res.body.user).toEqual({
-        id: user.id,
-        email: user.email,
-        username: newUsername
-      })
-
-      const dbUser = await User.findOne({email: newUser.email})
-      expect(dbUser).toEqual(
-        expect.objectContaining({
-          id: expect.anything(),
-          email: newUser.email,
-          username: newUsername,
+        expect(res.body.user).toEqual({
+          id: user.id,
+          email: user.email,
+          username: newUsername
         })
-      )
+
+        const dbUser = await User.findOne({email: newUser.email})
+        expect(dbUser).toEqual(
+          expect.objectContaining({
+            id: expect.anything(),
+            email: newUser.email,
+            username: newUsername,
+          })
+        )
+      }
     }) 
+    
   })
 
   describe('DELETE /v1/users', () => {

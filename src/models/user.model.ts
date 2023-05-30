@@ -2,7 +2,9 @@ import { Schema, Model, Document, model } from 'mongoose';
 import bcrypt from 'bcrypt'
 import config from '../config/config';
 // import { redis } from '../config/config';
-import { UserDb }from '../types/User'
+import { UserDocument, User }from '../types/User'
+import { uniqueId } from 'lodash';
+import { redisClient } from 'src/db/redis';
 
 interface UserMethods {
   passwordMatches(password:string):Promise<string>
@@ -10,14 +12,13 @@ interface UserMethods {
 
 //Model type parameters: DocType, QueryHelpers, Methods
 //Statics do not have an explicit parameter
-interface UserModel extends Model<UserDb, {}, UserMethods> {
+interface UserModel extends Model<UserDocument, {}, UserMethods> {
   emailExists(email:string):Promise<boolean>
 }
 
 //Schema type parameters: DocType, Mongoose model type, TInstanceMethods, TQueryHelpers
-const userSchema = new Schema<UserDb, UserModel, UserMethods>(
+const userSchema = new Schema<UserDocument, UserModel, UserMethods>(
     {
-      id: 'UUID',
       username: {
         type: String, 
         required: true,
@@ -43,14 +44,12 @@ const userSchema = new Schema<UserDb, UserModel, UserMethods>(
     },
     {
       timestamps: true,
-      'toJSON': {
-        transform: (_doc, ret, _options) => {
-          return {
-            id: ret._id,
-            username: ret.username,
-            email: ret.email,
-            roles: ret.roles
-          }
+      'toObject': {
+        transform: (_doc: UserDocument, ret: any, _options): User => {
+          delete ret.password
+          ret.id = ret._id
+          delete ret._id
+          return ret
         }
       }
     }
@@ -79,7 +78,7 @@ userSchema.pre('save', async function (_next) {
 })
 
 
-const User = model<UserDb, UserModel>('User', userSchema)
+const User = model<UserDocument, UserModel>('User', userSchema)
 
 export default User;
 

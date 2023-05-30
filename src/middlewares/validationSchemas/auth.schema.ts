@@ -22,10 +22,7 @@ const login =  z.object({
 
 const logout =  z.object({
   params: z.object({}),
-  body: UserSchema.pick(({
-    email: true,
-    password: true
-  }))
+  body: z.object({})
 })
 
 export default {

@@ -14,6 +14,7 @@ declare module 'express-session' {
 }
 
 const session = expressSession({
+  name: 'sessionId',
   store: redisStore,
   secret: config.session.secret,
   saveUninitialized: false,

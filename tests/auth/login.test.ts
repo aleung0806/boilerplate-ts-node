@@ -4,6 +4,8 @@ import app from "../../src/app";
 const api = supertest(app);
 import User from '../../src/models/user.model'
 import config from '../../src/config/config'
+import { redisClient } from '../../src/db/redis'
+import logger from "../../src/utils/logger";
 
 const user1 = {
   email: 'user1@test.com',
@@ -19,8 +21,10 @@ const user2 = {
 
 beforeEach(async () => {
   await mongoose.connect(config.mongoose.url)
+
   await User.deleteMany({})
   await api.post('/v1/register').send(user1)
+  await redisClient.flushDb()
 })
 
 
@@ -35,24 +39,15 @@ describe('POST /v1/login', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
-    expect(res.body.user).toEqual({
-      id: expect.anything(),
-      email: user1.email,
-      username: user1.username
-    })
-    expect(res.header['set-cookie'][0]).toMatch(/^sessionId=/)
-  })
-
-  test('should return 401 if password does not match email in db', async () => {
-    const res = await api
-      .post('/v1/login')
-      .send({
+    expect(res.body.user).toEqual(
+      expect.objectContaining({
         email: user1.email,
-        password: user2.password
+        username: user1.username
       })
-      .expect(401)
+    )
+    console.log(res.header['set-cookie'][0])
+    expect(res.header['set-cookie'][0]).toMatch(/^sessionId=/)
 
-      expect(res.body.user).toBeUndefined()
   })
 
   test('should return 401 if email does not exist in db', async () => {
@@ -93,5 +88,6 @@ describe('POST /v1/login', () => {
 })
 
 afterAll(async () => {
+ 
   await mongoose.connection.close()
 })

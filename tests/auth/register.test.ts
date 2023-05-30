@@ -54,7 +54,6 @@ describe('POST /v1/register', () => {
         username: user1.username,
         password: expect.not.stringMatching(user1.password),
         roles: ["user"]
-
       }
     )
   })
