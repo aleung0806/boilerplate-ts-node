@@ -30,9 +30,8 @@ app.options('*', cors());
 
 app.use(morgan)
 app.use(sessionHandler)
-
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 
 app.use('/v1', authRouter);
 app.use('/v1', userRouter);

@@ -17,12 +17,12 @@ export const register: Middleware = async (req, res, _next) => {
 
 export const login: Middleware = async (req, res, next) => {
   passport.authenticate('local', (err, user, _info) => {
-    if (err) { 
-      console.log('err', err)
-      return next(err); 
-    }else{
+    if (err) { return next(err) }
+    if (user){
       req.login(user, next);
       res.status(StatusCodes.OK).send(req.user)
+    }else{
+      res.status(StatusCodes.UNAUTHORIZED).send('Email or passoword incorrect')
     }
   })(req, res, next);
 };
