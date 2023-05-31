@@ -44,8 +44,22 @@ const userSchema = new Schema<UserDocument, UserModel, UserMethods>(
     },
     {
       timestamps: true,
+      'toJSON': {
+        transform: (_doc: UserDocument, ret: any, _options): User => {
+          delete ret.createdAt
+          delete ret.updatedAt
+          delete ret.__v
+          delete ret.password
+          ret.id = ret._id
+          delete ret._id
+          return ret
+        }
+      },
       'toObject': {
         transform: (_doc: UserDocument, ret: any, _options): User => {
+          delete ret.createdAt
+          delete ret.updatedAt
+          delete ret.__v
           delete ret.password
           ret.id = ret._id
           delete ret._id

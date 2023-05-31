@@ -25,6 +25,11 @@ export default {
   email: {
     username: env.SMTP_USERNAME,
     password: env.SMTP_PASSWORD
+  },
+  google: {
+    clientId: env.GOOGLE_CLIENT_ID!,
+    clientSecret: env.GOOGLE_CLIENT_SECRET!,
+    callbackUrl: env.GOOGLE_CALLBACK_URL!
   }
 
 }

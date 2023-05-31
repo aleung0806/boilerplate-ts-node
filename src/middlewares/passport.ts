@@ -1,20 +1,21 @@
 import passport from 'passport';
-import{ Strategy as LocalStrategy} from 'passport-local';
 import authService from '../services/auth.service';
 import logger from '../utils/logger';
 import localStrategy from './passportStrategies/local'
+import googleStrategy from './passportStrategies/local'
+import { User } from '../types/User'
 
-const strategy = localStrategy
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function(user: User, done) {
   done(null, user);
 });
 
-passport.use(strategy)
-
+passport.use(googleStrategy)
+passport.use(localStrategy)
 
 export default passport

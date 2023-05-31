@@ -4,41 +4,46 @@ import authService from "../services/auth.service";
 
 import { StatusCodes } from 'http-status-codes'
 import logger from '../utils/logger'
-import passport from 'passport';
 
 import { Request, Response, NextFunction} from 'express'
 import { Middleware } from "src/types/Middleware";
 import ApiError from "../utils/ApiError";
+import passport from '../middlewares/passport'
 
 export const register: Middleware = async (req, res, _next) => {
   const user = await userService.create(req.body)
   res.status(StatusCodes.CREATED).send({user})
 };
 
-export const login: Middleware = async (req, res, _next) => {
-  // const { email, password } = req.body
-  // const user = await authService.verifyEmailPassword(email, password);
-  // req.session.user = user
-  // res.status(StatusCodes.OK).send({user})
+export const login: Middleware = async (req, res, next) => {
+  passport.authenticate('local', (err, user, _info) => {
+    if (err) { 
+      console.log('err', err)
+      return next(err); 
+    }else{
+      req.login(user, next);
+      res.status(StatusCodes.OK).send(req.user)
+    }
+  })(req, res, next);
 };
 
 export const logout: Middleware = async (req, res, next) => {
-  // const { email, password } = req.body
-  // if (req.session){
-  // req.session.destroy((error) => {
-  //   if (error) {
-  //     return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
-  //   }
-  // })
-  // res.status(StatusCodes.OK).send('user is logged out')
+  if (req.session){
+    req.session.destroy((error) => {
+      if (error) {
+        return next(new ApiError(StatusCodes.FORBIDDEN, 'You must be logged in.'));
+      }
+    })
+  }
+  res.status(StatusCodes.OK).send('user is logged out')
 };
 
-export const verify: Middleware = async (req, res, _next) => {
-  if(req.session === null){
-    res.status(StatusCodes.OK)
-  }else{
-    res.status(StatusCodes.OK).send(req.session.user)
-  }
+export const verify: Middleware = async (_req, _res, _next) => {
+  // if(req.session === null){
+  //   res.status(StatusCodes.OK)
+  // }else{
+  //   res.status(StatusCodes.OK).send(req.session.user)
+  // }
 };
 
 

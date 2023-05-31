@@ -33,15 +33,12 @@ module.exports = {
           scheme: 'bearer',
           bearerFormat: 'JWT'
         },
-        // oauth2: {
-        //   type: 'oauth2',
-        //   description: 'This API uses oauth 2.0 with authorization code flow',
-        //   flows: {
-        //     authorizationCode: {
-        //       authorizationUrl: 'http:localhost:3000/v1/oauth2/authorize'
-        //     }
-        //   }
-        // }
+        oauth2: {
+          type: 'oauth2',
+          authorizationUrl: "https://localhost:3000/oauth/authorize",
+          description: 'This API uses oauth 2.0 with authorization code flow',
+          flow: "implicit",
+        }
       },
     ...components
   },

@@ -3,15 +3,17 @@ import ApiError from '../utils/ApiError'
 import { User } from '../types/User'
 import UserModel from '../models/user.model'
 
-const verifyEmailPassword = async (email: string, password: string): Promise<User> => {
+const verifyEmailPassword = async (email: string, password: string): Promise<User | ApiError> => {
   const user = await UserModel.findOne({email})
-
-  if (user){
-    if (await user.passwordMatches(password)){
-      return user
-    }
+  if (!user){
+    return new ApiError(401, 'Email not found.')
   }
-  throw new ApiError(StatusCodes.UNAUTHORIZED, 'Incorrect email or password')
+  if (await user.passwordMatches(password)) {
+    return user
+  }
+  return new ApiError(401, `Password doesn't match email.`)
+
+  
 }
 
 export default {
