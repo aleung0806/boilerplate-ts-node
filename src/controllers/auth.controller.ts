@@ -10,10 +10,7 @@ import { Middleware } from "src/types/Middleware";
 import ApiError from "../utils/ApiError";
 import passport from '../middlewares/passport'
 
-export const register: Middleware = async (req, res, _next) => {
-  const user = await userService.create(req.body)
-  res.status(StatusCodes.CREATED).send({user})
-};
+
 
 export const google: Middleware = async (req, res, next) => {
   passport.authenticate('google', { scope: [ 'email', 'profile' ] })(req, res, next);
@@ -55,12 +52,18 @@ export const logout: Middleware = async (req, res, next) => {
   res.status(StatusCodes.OK).send('user is logged out')
 };
 
-export const verify: Middleware = async (_req, _res, _next) => {
-  // if(req.session === null){
-  //   res.status(StatusCodes.OK)
-  // }else{
-  //   res.status(StatusCodes.OK).send(req.session.user)
-  // }
+export const register: Middleware = async (req, res, _next) => {
+  const user = await userService.create(req.body)
+  res.status(StatusCodes.CREATED).send({user})
+};
+
+
+export const verify: Middleware = async (req, res, _next) => {
+  if(req.session === null){
+    res.status(StatusCodes.OK)
+  }else{
+    res.status(StatusCodes.OK).send(req.session.user)
+  }
 };
 
 
