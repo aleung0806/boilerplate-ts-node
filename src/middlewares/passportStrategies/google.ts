@@ -5,10 +5,10 @@ const strategy = new Google.Strategy({
     clientID: config.google.clientId,
     clientSecret: config.google.clientSecret,
     callbackURL: config.google.callbackUrl,
+    
   },
   (_accessToken, _refreshToken, profile, done) => {
-    // This function is called when the authentication is successful
-    // You can customize it based on your application's needs
+    console.log(JSON.stringify(profile, null, 2))
     return done(null, profile);
   }
 )

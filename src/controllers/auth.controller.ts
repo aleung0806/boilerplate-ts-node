@@ -15,14 +15,31 @@ export const register: Middleware = async (req, res, _next) => {
   res.status(StatusCodes.CREATED).send({user})
 };
 
-export const login: Middleware = async (req, res, next) => {
-  passport.authenticate('local', (err, user, _info) => {
+export const google: Middleware = async (req, res, next) => {
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] })(req, res, next);
+};
+
+export const googleCallback: Middleware = async (req, res, next) => {
+  passport.authenticate('google', (err, user, _info) => {
     if (err) { return next(err) }
     if (user){
       req.login(user, next);
       res.status(StatusCodes.OK).send(req.user)
     }else{
-      res.status(StatusCodes.UNAUTHORIZED).send('Email or passoword incorrect')
+      res.status(StatusCodes.UNAUTHORIZED).send('Email or password incorrect')
+    }
+  })(req, res, next);
+  
+};
+
+export const login: Middleware = async (req, res, next) => {
+  passport.authenticate('local', {session: false}, (err, user, _info) => {
+    if (err) { return next(err) }
+    if (user){
+      req.login(user, next);
+      res.status(StatusCodes.OK).send(req.user)
+    }else{
+      res.status(StatusCodes.UNAUTHORIZED).send('Email or password incorrect')
     }
   })(req, res, next);
 };
@@ -85,5 +102,7 @@ export default {
   register,
   login,
   logout,
-  verify
+  verify,
+  google,
+  googleCallback
 }
