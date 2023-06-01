@@ -1,5 +1,5 @@
 import logger from "../utils/logger";
-import { ErrorMiddleware } from "src/types/Middleware"
+import { ErrorMiddleware } from "src/types/Express"
 
 const error: ErrorMiddleware = (err, _req, res, _next) => {
   const { statusCode, message } = err

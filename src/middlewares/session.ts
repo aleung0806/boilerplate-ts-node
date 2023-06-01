@@ -4,7 +4,7 @@ import { redisStore } from '../db/redis';
 import ApiError from "../utils/ApiError";
 import logger from "../utils/logger";
 import { StatusCodes } from 'http-status-codes'
-import { Middleware } from '../types/Middleware'
+import { Middleware } from '../types/Express'
 import { User } from '../types/User'
 
 declare module 'express-session' {
@@ -12,6 +12,8 @@ declare module 'express-session' {
     user?: User | null;
   }
 }
+
+
 
 const session = expressSession({
   name: 'sessionId',

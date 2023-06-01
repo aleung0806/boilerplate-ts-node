@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import logger from '../utils/logger'
 import passport from 'passport';
 // import LocalStrategy from 'passport-local.Strategy';
-import { Middleware } from '../types/Middleware'
+import { Middleware } from '../types/Express'
 import userService from '../services/user.service'
 
 const create: Middleware = async (req, res, _next) => {

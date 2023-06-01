@@ -1,5 +1,4 @@
 import passport from 'passport';
-import authService from '../services/auth.service';
 import logger from '../utils/logger';
 import localStrategy from './passportStrategies/local'
 import googleStrategy from './passportStrategies/google'

@@ -27,5 +27,4 @@ export const findUserByAccount = async (profile): Promise<User | null> => {
     await AccountModel.create({provider: 'google', providerId: profile.id, userId: user.id})
     return user;
   } 
-
 }

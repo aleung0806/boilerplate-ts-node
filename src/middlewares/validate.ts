@@ -1,7 +1,7 @@
 import logger from '../utils/logger';
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
-import { Middleware } from '../types/Middleware'
+import { Middleware } from '../types/Express'
 import { ZodType } from 'zod'
 import { fromZodError } from 'zod-validation-error';
 
