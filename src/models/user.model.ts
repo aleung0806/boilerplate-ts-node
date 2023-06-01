@@ -48,7 +48,7 @@ const userSchema = new Schema<UserDocument, UserModel, UserMethods>(
         transform: (_doc: UserDocument, ret: any, _options): User => {
           const { _id, createdAt, updatedAt, __v, password, ...rest } = ret
           ret = rest
-          ret.id = ret._id
+          ret.id = _id
           return ret
         }
       },
@@ -56,7 +56,7 @@ const userSchema = new Schema<UserDocument, UserModel, UserMethods>(
         transform: (_doc: UserDocument, ret: any, _options): User => {
           const { _id, createdAt, updatedAt, __v, password, ...rest } = ret
           ret = rest
-          ret.id = ret._id
+          ret.id = _id
           return ret
         }
       }

@@ -7,7 +7,7 @@ import userSchema from '../../middlewares/validationSchemas/user.schema'
 
 router.route('/users')
   .post(validate(userSchema.create), authorize(['admin']), userController.create)
-  .get(validate(userSchema.getAll), authorize(['admin']), userController.getAll)
+  .get(validate(userSchema.getAll), authorize(['admin', 'user']), userController.getAll)
   .delete(validate(userSchema.deleteAll), authorize(['admin']), userController.deleteAll)
 
 router.route("/users/:id")

@@ -14,7 +14,6 @@ declare module 'express-session' {
 }
 
 
-
 const session = expressSession({
   name: 'sessionId',
   store: redisStore,
@@ -22,18 +21,21 @@ const session = expressSession({
   saveUninitialized: false,
   resave: false,
   cookie: {
-    secure: false,
     sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 24 * 14,
   },
 });
 
-const log: Middleware = (req, _res, next) => {
-  if (req.session.user){
-    logger.info(`session: ${JSON.stringify(req.session.user)}`)
-  }
-  next();
-};
+// const log: Middleware = (req, _res, next) => {
+//   console.log(JSON.stringify(req.session, null, 2))
+//   if (req.user){
+//     logger.info(`session: ${JSON.stringify(req.session.user)}`)
+//   }
+//   next();
+// };
 
 
 
-export default [session, log]
+// export default [session, log]
+export default session
+

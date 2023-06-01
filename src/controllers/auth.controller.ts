@@ -15,23 +15,33 @@ export const google: Middleware = async (req, res, next) => {
 };
 
 export const googleCallback: Middleware = async (req, res, next) => {
-  passport.authenticate('google', (err, user, _info) => {
-    if (err) { return next(err) }
+  passport.authenticate('google', {session: true}, (err, user, _info) => {
+    if (err) { 
+      logger.error(err.message)
+      return next(new ApiError(500, 'Internal Server Error.')) 
+    }
     if (user){
-      req.login(user, next);
+      req.login(user, () => {
+        console.log('logging in')
+        req.session.user = user
+      });
       res.status(StatusCodes.OK).send(req.user)
     }else{
-      res.status(StatusCodes.UNAUTHORIZED).send('Email or password incorrect')
+      res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized')
     }
   })(req, res, next);
   
 };
 
 export const login: Middleware = async (req, res, next) => {
-  passport.authenticate('local', {session: false}, (err, user, _info) => {
-    if (err) { return next(err) }
+  passport.authenticate('local', {session: true}, (err, user, _info) => {
+    if (err) { 
+      logger.error(err.message)
+      return next(new ApiError(500, 'Internal Server Error.')) 
+    }
     if (user){
-      req.login(user, next);
+      req.login(user, () => {
+      });
       res.status(StatusCodes.OK).send(req.user)
     }else{
       res.status(StatusCodes.UNAUTHORIZED).send('Email or password incorrect')
@@ -56,12 +66,12 @@ export const register: Middleware = async (req, res, _next) => {
 };
 
 
-export const verify: Middleware = async (_req, _res, _next) => {
-  // if(req.session === null){
-  //   res.status(StatusCodes.OK)
-  // }else{
-  //   res.status(StatusCodes.OK).send(req.session.user)
-  // }
+export const verify: Middleware = async (req, res, _next) => {
+  if(req.user){
+    res.status(StatusCodes.OK)
+  }else{
+    res.status(StatusCodes.OK).send(req.user)
+  }
 };
 
 

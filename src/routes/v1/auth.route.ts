@@ -8,8 +8,9 @@ import authorize from '../../middlewares/authorize'
 
 router.get('/google-auth', authController.google);
 router.get('/google-auth/callback', authController.googleCallback);
-
 router.post('/login', authController.login)
+
+
 router.post('/register', validate(authSchema.register), authController.register)
 router.post('/logout', validate(authSchema.logout), authController.logout)
 //router.post('/forget-password', validate(authSchema.logout), authController.logout)

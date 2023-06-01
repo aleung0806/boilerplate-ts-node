@@ -1,5 +1,5 @@
 {
-  "exclude": ["./dist", "__tests__", "jest.config.js"],
+  "exclude": ["./dist", "__tests__", "jest.config.js", "tsconfig.json"],
   "compilerOptions":{
     "noImplicitAny": false,
     "outDir": "./dist",
