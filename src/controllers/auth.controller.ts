@@ -15,40 +15,25 @@ export const google: Middleware = async (req, res, next) => {
 };
 
 export const googleCallback: Middleware = async (req, res, next) => {
-  passport.authenticate('google', {session: true}, (err, user, _info) => {
-    if (err) { 
-      logger.error(err.message)
-      return next(new ApiError(500, 'Internal Server Error.')) 
+  passport.authenticate('google', 
+    {
+      session: true,
+      successRedirect: '/v1/homePage',
+      failureRedirect: '/v1/loginPage',
+      failureMessage: 'true'
     }
-    if (user){
-      req.login(user, () => {
-        console.log('logging in')
-        if (req.session.passport){
-          console.log(req.session.passport.user)
-        }
-      });
-      res.status(StatusCodes.OK).send(req.user)
-    }else{
-      res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized')
-    }
-  })(req, res, next);
-  
+  )(req, res, next);
 };
 
 export const login: Middleware = async (req, res, next) => {
-  passport.authenticate('local', {session: true}, (err, user, _info) => {
-    if (err) { 
-      logger.error(err.message)
-      return next(new ApiError(500, 'Internal Server Error.')) 
+  passport.authenticate('google', 
+    {
+      session: true,
+      successRedirect: '/v1/homePage',
+      failureRedirect: '/v1/loginPage',
+      failureMessage: 'true'
     }
-    if (user){
-      req.login(user, () => {
-      });
-      res.status(StatusCodes.OK).send(req.user)
-    }else{
-      res.status(StatusCodes.UNAUTHORIZED).send('Email or password incorrect')
-    }
-  })(req, res, next);
+  )(req, res, next);
 };
 
 
@@ -72,7 +57,22 @@ export const register: Middleware = async (req, res, _next) => {
 export const verify: Middleware = async (req, res, _next) => {
   req.session.test = 'testUser'
   res.status(200).send('Testing')
+};
 
+export const homePage: Middleware = async (req, res, _next) => {
+  if (req.user){
+    res.status(200).send(req.user)
+  }else{
+    res.status(200).send('No User')
+  }
+};
+
+export const loginPage: Middleware = async (req, res, _next) => {
+  if (req.user){
+    res.status(200).send(req.user)
+  }else{
+    res.status(200).send('No User')
+  }
 };
 
 
@@ -111,6 +111,8 @@ export const verify: Middleware = async (req, res, _next) => {
 // };
 
 export default {
+  homePage,
+  loginPage,
   register,
   login,
   logout,
