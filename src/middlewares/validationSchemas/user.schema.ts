@@ -1,3 +1,4 @@
+import { string } from 'joi'
 import { zipObject } from 'lodash'
 import { z } from 'zod'
 import { UserSchema } from '../../types/User'
@@ -5,7 +6,7 @@ import { UserSchema } from '../../types/User'
 
 const create = z.object({
   params: z.object({
-    id: UserSchema.pick({id: true})
+    id: z.string()
   }),
   body: UserSchema
 })
@@ -22,28 +23,28 @@ const deleteAll = z.object({
 
 const getById = z.object({
   params: z.object({
-    id: UserSchema.pick({id: true})
+    id: z.string()
   }),
   body: z.object({})
 })
 
 const updateById = z.object({
   params: z.object({
-    id: UserSchema.pick({id: true})
+    id: z.string()
   }),
   body: UserSchema
 })
 
 const deleteById = z.object({
   params: z.object({
-    id: UserSchema.pick({id: true})
+    id: z.string()
   }),
   body: z.object({})
 })
 
 const updateRoleById = z.object({
   params: z.object({
-    id: UserSchema.pick({id: true})
+    id: z.string()
   }),
   body: UserSchema.pick({roles: true})
 })

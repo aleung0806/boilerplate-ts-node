@@ -8,16 +8,12 @@ import { authorize, loggedOutOnly, loggedInOnly }from '../../middlewares/authori
 
 router.get('/google-auth', loggedOutOnly, authController.google);
 router.get('/google-auth/callback', loggedOutOnly, authController.googleCallback);
-router.post('/login', loggedOutOnly, authController.login)
+
+router.post('/login', loggedOutOnly, validate(authSchema.login), authController.login)
 router.post('/register', loggedOutOnly, validate(authSchema.register), authController.register)
-
-
 router.post('/logout', loggedInOnly, validate(authSchema.logout), authController.logout)
-router.get('/homePage', authController.homePage)
-router.get('/loginPage', authController.loginPage)
 
-
-// router.post('/logout', logout)
+// test routes
 router.get('/homePage', authController.homePage)
 router.get('/loginPage', authController.loginPage)
 router.get('/verify', authController.verify)

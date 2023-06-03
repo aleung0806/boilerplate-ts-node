@@ -6,17 +6,17 @@ import validate from '../../middlewares/validate'
 import userSchema from '../../middlewares/validationSchemas/user.schema'
 
 router.route('/users')
-  .post(validate(userSchema.create), authorize(['admin']), userController.create)
-  .get(validate(userSchema.getAll), authorize(['admin', 'user']), userController.getAll)
-  .delete(validate(userSchema.deleteAll), authorize(['admin']), userController.deleteAll)
+  .post(validate(userSchema.create), authorize({roles: ['admin']}), userController.create)
+  .get(validate(userSchema.getAll), authorize({roles: ['admin']}), userController.getAll)
+  .delete(validate(userSchema.deleteAll), authorize({roles: ['admin']}), userController.deleteAll)
 
 router.route("/users/:id")
-  .get(validate(userSchema.getById), authorize(['admin', 'self']), userController.getById)
-  .patch(validate(userSchema.updateById), authorize(['admin','self']), userController.updateById)
-  .delete(validate(userSchema.deleteById), authorize(['admin', 'self']), userController.deleteById)
+  .get(validate(userSchema.getById), authorize({roles: ['admin'], attributes: ['self']}), userController.getById)
+  .patch(validate(userSchema.updateById), authorize({roles: ['admin'], attributes: ['self']}), userController.updateById)
+  .delete(validate(userSchema.deleteById), authorize({roles: ['admin'], attributes: ['self']}), userController.deleteById)
 
 router.route("/users/:id/role")
-  .put(validate(userSchema.updateRoleById), authorize(['admin']), userController.updateRoleById)
+  .put(validate(userSchema.updateRoleById), authorize({roles: ['admin']}), userController.updateRoleById)
 
 
 

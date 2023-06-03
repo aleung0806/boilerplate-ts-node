@@ -6,7 +6,7 @@ import validate from '../../middlewares/validate'
 import userSchema from '../../middlewares/validationSchemas/user.schema'
 
 router.route("/roles/:id")
-  .put(validate(userSchema.updateRoleById), authorize(['admin']), userController.updateRoleById)
+  .put(validate(userSchema.updateRoleById), authorize({roles: ['admin']}), userController.updateRoleById)
 
 
 export default router
