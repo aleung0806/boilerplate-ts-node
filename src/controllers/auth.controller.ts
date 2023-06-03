@@ -23,7 +23,9 @@ export const googleCallback: Middleware = async (req, res, next) => {
     if (user){
       req.login(user, () => {
         console.log('logging in')
-        req.session.user = user
+        if (req.session.passport){
+          console.log(req.session.passport.user)
+        }
       });
       res.status(StatusCodes.OK).send(req.user)
     }else{
@@ -49,6 +51,7 @@ export const login: Middleware = async (req, res, next) => {
   })(req, res, next);
 };
 
+
 export const logout: Middleware = async (req, res, next) => {
   if (req.session){
     req.session.destroy((error) => {
@@ -67,11 +70,9 @@ export const register: Middleware = async (req, res, _next) => {
 
 
 export const verify: Middleware = async (req, res, _next) => {
-  if(req.user){
-    res.status(StatusCodes.OK)
-  }else{
-    res.status(StatusCodes.OK).send(req.user)
-  }
+  req.session.test = 'testUser'
+  res.status(200).send('Testing')
+
 };
 
 

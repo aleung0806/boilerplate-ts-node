@@ -7,7 +7,7 @@ Passport sessions:
 
 passport.serializeUser()
 passport.deserializeUser()
-Must be configured how to store/retrieve users from the session. For example, maybe only the userId is stored in the session cache and deserializing the user requires retrieving user data from db before storing it to req.user.
+Must be configured how to store/retrieve users from the session. For example, maybe only the userId is stored in the session cache and deserializing the user requires retrieving user data from db before storing it to req.session.passport.user.
 
 app.use(passport.initialize()) 
 Initializes passport for each request to the server.

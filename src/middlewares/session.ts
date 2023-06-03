@@ -7,9 +7,14 @@ import { StatusCodes } from 'http-status-codes'
 import { Middleware } from '../types/Express'
 import { User } from '../types/User'
 
+interface Passport {
+  user?: User
+}
+
 declare module 'express-session' {
   interface SessionData {
-    user?: User | null;
+    test?: string
+    passport?: Passport
   }
 }
 
@@ -21,8 +26,8 @@ const session = expressSession({
   saveUninitialized: false,
   resave: false,
   cookie: {
+    secure: false,
     sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24 * 14,
   },
 });
 
