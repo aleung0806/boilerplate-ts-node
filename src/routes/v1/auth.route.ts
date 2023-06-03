@@ -18,4 +18,10 @@ router.get('/homePage', authController.homePage)
 router.get('/loginPage', authController.loginPage)
 router.get('/verify', authController.verify)
 
+
+router.post('/reset-password')
+router.post('/verify-reset-password')
+router.post('/verify-email')
+
+
 export default router

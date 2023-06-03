@@ -47,6 +47,25 @@ This must be be called after your regular session middleware. You do not need to
 
 And now an authorization middleware can determine if the user has the appropriate permissions. 
 
+To add a new resource: 
+1. Write a zod schema for the resource. Infer the type from it. Zod allows run-time typechecking for, for example, request validation. Zod has useful typescript-like utilities like pick and omit. 
+2. Write your mongoose schema and type it with your type. Extend the mongoose types for statics and methods if need be. 
+3. Write your routes for your resource in the docs. 
+
+
+
+Verify Email Flow:
+Client: /register {email, password, username}
+
+Server: redirect to verification page
+Check to see email is not taken
+Generate a token.
+Send an email with the link /verify-email
+
+/verify-email
+On click, redirect to verification successful. 
+
+
 
 
 
