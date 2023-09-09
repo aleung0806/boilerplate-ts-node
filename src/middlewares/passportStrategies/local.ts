@@ -19,7 +19,6 @@ const verify: Local.VerifyFunction = async (email, password, done) => {
 const strategy = new Local.Strategy({
     usernameField: 'email',
     passwordField: 'password',
-    session: true
   }, 
   verify
 )

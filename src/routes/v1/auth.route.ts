@@ -14,8 +14,6 @@ router.post('/register', loggedOutOnly, validate(authSchema.register), authContr
 router.post('/logout', loggedInOnly, validate(authSchema.logout), authController.logout)
 
 // test routes
-router.get('/homePage', authController.homePage)
-router.get('/loginPage', authController.loginPage)
 router.get('/verify', authController.verify)
 
 

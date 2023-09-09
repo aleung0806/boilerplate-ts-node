@@ -20,15 +20,15 @@ declare module 'express-session' {
 
 
 const session = expressSession({
-  name: 'sessionId',
   store: redisStore,
   secret: config.session.secret,
   saveUninitialized: false,
   resave: false,
   cookie: {
-    secure: false,
-    sameSite: "lax",
-  },
+    secure: false, 
+    httpOnly: true, 
+    maxAge: 1000 * 60 * 30
+    },
 });
 
 // const log: Middleware = (req, _res, next) => {

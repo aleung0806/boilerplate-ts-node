@@ -10,7 +10,9 @@ import errorHandler from './middlewares/error'
 import morgan from './middlewares/morgan'
 import sessionHandler from './middlewares/session'
 import passport from './middlewares/passport'
-
+import expressSession from "express-session";
+import config from './config/config'
+import { redisStore } from './db/redis';
 import authRouter from "./routes/v1/auth.route";
 import userRouter from './routes/v1/user.route';
 import roleRouter from './routes/v1/roles.route';
@@ -26,12 +28,27 @@ app.use(mongoSanitize());
 app.use(compression());
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
-app.options('*', cors());
-
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+)
 
 app.use(morgan)
-app.use(sessionHandler)
 app.use(passport.initialize());
+app.use(expressSession({
+  store: redisStore,
+  secret: config.session.secret,
+  saveUninitialized: false,
+  resave: false,
+  cookie: {
+    secure: false, 
+    httpOnly: true, 
+    maxAge: 1000 * 60 * 30
+    },
+}))
 app.use(passport.session());
 
 app.use('/v1', authRouter);

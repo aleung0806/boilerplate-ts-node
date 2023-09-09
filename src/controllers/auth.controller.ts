@@ -8,8 +8,6 @@ import { Middleware } from "src/types/Express";
 import ApiError from "../utils/ApiError";
 import passport from '../middlewares/passport'
 
-
-
 export const google: Middleware = async (req, res, next) => {
   passport.authenticate('google', { scope: [ 'email', 'profile' ] })(req, res, next);
 };
@@ -18,22 +16,20 @@ export const googleCallback: Middleware = async (req, res, next) => {
   passport.authenticate('google', 
     {
       session: true,
-      successRedirect: '/v1/homePage',
-      failureRedirect: '/v1/loginPage',
-      failureMessage: 'true'
     }
   )(req, res, next);
 };
 
 export const login: Middleware = async (req, res, next) => {
-  passport.authenticate('google', 
-    {
-      session: true,
-      successRedirect: '/v1/homePage',
-      failureRedirect: '/v1/loginPage',
-      failureMessage: 'true'
+  passport.authenticate('local', (err, user, _info) => {
+    if (err) { return next(err); }
+    if (!user) { 
+      return res.status(401).send(null)
     }
-  )(req, res, next);
+    req.login(user, next);
+    res.status(200).send(user)
+    console.log(req)
+  })(req, res, next)
 };
 
 
@@ -55,24 +51,15 @@ export const register: Middleware = async (req, res, _next) => {
 
 
 export const verify: Middleware = async (req, res, _next) => {
-  req.session.test = 'testUser'
-  res.status(200).send('Testing')
-};
-
-export const homePage: Middleware = async (req, res, _next) => {
-  if (req.user){
-    res.status(200).send(req.user)
-  }else{
-    res.status(200).send('No User')
+  if (req.session !== undefined ) {
+    if (req.session.passport !== undefined ) {
+      if (req.session.passport.user !== undefined ) {
+        return res.status(200).send(req.session.passport.user)
+      }
+    }
   }
-};
+  return res.status(200).send(null)
 
-export const loginPage: Middleware = async (req, res, _next) => {
-  if (req.user){
-    res.status(200).send(req.user)
-  }else{
-    res.status(200).send('No User')
-  }
 };
 
 
@@ -111,8 +98,7 @@ export const loginPage: Middleware = async (req, res, _next) => {
 // };
 
 export default {
-  homePage,
-  loginPage,
+
   register,
   login,
   logout,
