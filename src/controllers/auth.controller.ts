@@ -24,10 +24,11 @@ export const login: Middleware = async (req, res, next) => {
   passport.authenticate('local', (err, user, _info) => {
     if (err) { return next(err); }
     if (!user) { 
-      return res.status(401).send(null)
+      return res.sendStatus(401)
     }
-    req.login(user, next);
-    res.status(200).send(user)
+    req.login(user, () => {
+      res.status(200).send(user)
+    })
   })(req, res, next)
 };
 
@@ -50,14 +51,11 @@ export const register: Middleware = async (req, res, _next) => {
 
 
 export const verify: Middleware = async (req, res, _next) => {
-  if (req.session !== undefined ) {
-    if (req.session.passport !== undefined ) {
-      if (req.session.passport.user !== undefined ) {
-        return res.status(200).send(req.session.passport.user)
-      }
-    }
+  if (req.isAuthenticated()){
+    return res.status(200).send(req.user)
   }
-  return res.status(200).send(null)
+
+  return res.sendStatus(204)
 
 };
 
