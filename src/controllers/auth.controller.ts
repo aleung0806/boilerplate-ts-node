@@ -28,7 +28,6 @@ export const login: Middleware = async (req, res, next) => {
     }
     req.login(user, next);
     res.status(200).send(user)
-    console.log(req)
   })(req, res, next)
 };
 

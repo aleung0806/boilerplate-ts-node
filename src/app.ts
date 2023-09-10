@@ -18,6 +18,7 @@ import userRouter from './routes/v1/user.route';
 import roleRouter from './routes/v1/roles.route';
 import docsRouter from './routes/v1/docs.route';
 // import testRouter from "./routes/v1/test.route";
+const cookieParser = require('cookie-parser')
 
 const app = express();
 app.use(helmet());
@@ -26,8 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(xss());
 app.use(mongoSanitize());
 app.use(compression());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
-
+app.use(cookieParser())
 app.use(
   cors({
     origin: "http://localhost:3000",
