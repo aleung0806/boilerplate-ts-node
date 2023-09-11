@@ -26,7 +26,7 @@ const session = expressSession({
   resave: false,
   cookie: {
     secure: false, 
-    httpOnly: true, 
+    httpOnly: false, //also works with true?
     maxAge: 1000 * 60 * 30
     },
 });
