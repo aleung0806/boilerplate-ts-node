@@ -24,13 +24,13 @@ const getAll = async (): Promise<Array<User>> => {
 
 const getById = async (id: string): Promise<User> => {
 
-
   const user = await catchDbError(UserModel.findById(id))
+
   if (!user){
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
   }
-  return user
 
+  return user
 }
 
 const updateById = async (id: string, update: User): Promise<User>=> {
