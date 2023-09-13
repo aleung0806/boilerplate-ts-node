@@ -1,14 +1,16 @@
 import { string } from 'joi'
 import { zipObject } from 'lodash'
 import { z } from 'zod'
-import { UserSchema } from '../../types/User'
+import { UserDocumentSchema, UserSchema } from '../../types/User'
 
 
 const create = z.object({
-  params: z.object({
-    id: z.string()
-  }),
-  body: UserSchema
+  params: z.object({}),
+  body: UserDocumentSchema.pick(({
+    email: true,
+    username: true,
+    password: true
+  }))
 })
 
 const getAll = z.object({

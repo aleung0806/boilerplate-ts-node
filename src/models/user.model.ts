@@ -39,7 +39,7 @@ const userSchema = new Schema<UserDocument, UserModel, UserMethods>(
       },
       roles: {
         type: [ {type: String }],
-        default: ['admin']
+        default: ['owner']
       }
     },
     {

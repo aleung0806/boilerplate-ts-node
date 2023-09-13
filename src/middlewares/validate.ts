@@ -20,13 +20,11 @@ import { fromZodError } from 'zod-validation-error';
 // z.setErrorMap(customErrorMap);
 
 const validate = (schema: ZodType<any>): Middleware => async (req, _res, next) => {
-  const validation = await schema.safeParseAsync(req)
-
+  const validation = await schema.safeParse(req)
   if (!validation.success){
     const error = fromZodError(validation.error)
     return next(new ApiError(StatusCodes.BAD_REQUEST, error.message))
   }
-
   return next();
 };
 
