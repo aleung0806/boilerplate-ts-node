@@ -33,7 +33,7 @@ const updateById: Middleware = async (req, res, _next) => {
 };
 
 const deleteById: Middleware = async (req, res, _next) => {
-  await userService.deleteById(req.body)
+  await userService.deleteById(req.params.id)
   res.status(StatusCodes.NO_CONTENT).send()
 };
 
