@@ -15,13 +15,13 @@ export const verifyPassword = async (email: string, password: string): Promise<U
   return null
 }
 
-export const findUserByAccount = async (profile): Promise<User | null> => {
+export const findUserByProvider = async (profile): Promise<User | null> => {
   const account =  await AccountModel.findOne({provider: profile.provider, providerId: profile.id})
   if (account){
     const user: User | null = await UserModel.findById(account.userId)
     return user
   }else {
-    const user: User = await UserModel.create({email: profile._json.email, username: profile.displayName, password: 'password'})
+    const user: User = await UserModel.create({email: profile._json.email, username: profile.displayName, password: 'password'}) //fix the default password 
     await AccountModel.create({provider: 'google', providerId: profile.id, userId: user.id})
     return user;
   } 

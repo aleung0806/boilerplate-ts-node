@@ -7,13 +7,15 @@ export const login: Middleware = async (req, res, next) => {
 
 export const callback: Middleware = async (req, res, next) => {
   passport.authenticate('google', 
-    {
-      session: true,
-      successRedirect: '/v1/homePage',
-      failureRedirect: '/v1/loginPage',
-      failureMessage: 'true'
+   (err, user, _info) => {
+    if (err) { return next(err); }
+    if (!user) { 
+      return res.sendStatus(200)
     }
-  )(req, res, next);
+    req.login(user, () => {
+      res.status(200).send(user)
+    })
+  })(req, res, next)
 };
 
 export const success: Middleware = async (req, res, _next) => {

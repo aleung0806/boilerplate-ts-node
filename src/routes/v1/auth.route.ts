@@ -11,14 +11,12 @@ import { authorize, loggedOutOnly, loggedInOnly }from '../../middlewares/authori
 router.post('/login', loggedOutOnly, validate(authSchema.login), authController.login)
 router.post('/register', loggedOutOnly, validate(authSchema.register), authController.register)
 router.post('/logout', loggedInOnly, validate(authSchema.logout), authController.logout)
-
-// test routes
 router.get('/verify', authController.verify)
 
-router.get('/google-auth', googleController.login)
-router.get('/google-auth/callback', googleController.callback)
-router.get('/google-auth/success', googleController.success)
-router.get('/google-auth/failure', googleController.failure)
+router.post('/google', googleController.login)
+router.get('/google/callback', googleController.callback)
+router.get('/google/success', googleController.success)
+router.get('/google/failure', googleController.failure)
 
 router.post('/reset-password')
 router.post('/verify-reset-password')
