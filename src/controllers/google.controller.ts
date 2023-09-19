@@ -1,9 +1,9 @@
-import { Middleware } from "src/types/Express";
+import { Middleware } from "src/types/Express"
 import passport from '../middlewares/passport'
 
 export const login: Middleware = async (req, res, next) => {
   passport.authenticate('google', { scope: [ 'email', 'profile' ] })(req, res, next);
-};
+}
 
 export const callback: Middleware = async (req, res, next) => {
   passport.authenticate('google', { 

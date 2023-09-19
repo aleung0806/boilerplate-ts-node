@@ -24,7 +24,7 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
       listId: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: ListModel,
+        ref: 'List',
       },
       description: {
         type: String, 

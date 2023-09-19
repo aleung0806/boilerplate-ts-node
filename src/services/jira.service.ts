@@ -7,9 +7,9 @@ import ListModel from '../models/list.model'
 import IssueModel from '../models/issue.model'
 
 
-export const ProjectService = customService<Project>(ProjectModel)
-export const ListService = customService<List>(ListModel)
-export const IssueService = customService<Issue>(IssueModel)
+export const projectService = customService<Project>(ProjectModel)
+export const listService = customService<List>(ListModel)
+export const issueService = customService<Issue>(IssueModel)
 
 
 

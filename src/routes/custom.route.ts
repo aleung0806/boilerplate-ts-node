@@ -1,13 +1,13 @@
 import express from "express";
 
+const router = express.Router();
 
 export const customRouter = <_Type>(path, controller) => {
-  const router = express.Router();
 
   router.route(path)
     .post(controller.create)
     .get(controller.getAll)
-    .delete(controller.deleteAll)
+    .delete(controller.removeAll)
 
   router.route(`${path}/:id`)
     .get(controller.get)

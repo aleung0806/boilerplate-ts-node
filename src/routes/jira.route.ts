@@ -2,8 +2,9 @@ import { customRouter } from './custom.route'
 
 import { Issue, List, Project } from '../types/Jira'
 
-import { ProjectController, ListController, IssueController } from '../controllers/jira.controller'
+import { projectController, listController, issueController } from '../controllers/jira.controller'
 
-export const ProjectRouter = customRouter<Project>('/project', ProjectController)
-export const ListRouter = customRouter<List>('/list', ListController)
-export const IssueRouter = customRouter<Issue>('/issue', IssueController)
+export const projectRouter = customRouter<Project>('/project', projectController)
+export const listRouter = customRouter<List>('/list', listController)
+export const issueRouter = customRouter<Issue>('/issue', issueController)
+
