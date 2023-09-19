@@ -61,7 +61,7 @@ const deleteAllUsers = {
   }
 }
 
-const getUserById = {
+const getUser = {
   summary: "get user by id",
   operationId: 'getUserById',
   tags: [ "users" ],
@@ -78,7 +78,7 @@ const getUserById = {
   }
 }
 
-const updateUserById =  {
+const updateUser =  {
   summary: "update user by id",
   operationId: 'updateUserById',
   tags: [ "users" ],
@@ -91,7 +91,7 @@ const updateUserById =  {
     }
   }
 }
-const deleteUserById = {
+const deleteUser = {
   summary: "delete user by id",
   operationId: 'deleteUserById',
   tags: [ "users"],
@@ -109,8 +109,8 @@ export default {
     delete: deleteAllUsers
   },
   '/users/{id}': {
-    get: getUserById,
-    patch: updateUserById,
-    delete: deleteUserById
+    get: getUser,
+    patch: updateUser,
+    delete: deleteUser
   }
 }
