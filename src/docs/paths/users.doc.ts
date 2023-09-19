@@ -63,7 +63,7 @@ const deleteAllUsers = {
 
 const getUser = {
   summary: "get user by id",
-  operationId: 'getUserById',
+  operationId: 'getUser',
   tags: [ "users" ],
   responses: {
     200: {
@@ -80,7 +80,7 @@ const getUser = {
 
 const updateUser =  {
   summary: "update user by id",
-  operationId: 'updateUserById',
+  operationId: 'updateUser',
   tags: [ "users" ],
   responses: {
     200: {
@@ -93,7 +93,7 @@ const updateUser =  {
 }
 const deleteUser = {
   summary: "delete user by id",
-  operationId: 'deleteUserById',
+  operationId: 'deleteUser',
   tags: [ "users"],
   responses: {
     204: {

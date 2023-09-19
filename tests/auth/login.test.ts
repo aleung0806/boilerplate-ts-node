@@ -23,15 +23,15 @@ beforeEach(async () => {
   await mongoose.connect(config.mongoose.url)
 
   await User.deleteMany({})
-  await api.post('/v1/register').send(user1)
+  await api.post('/register').send(user1)
   await redisClient.flushDb()
 })
 
 
-describe('POST /v1/login', () => {
+describe('POST /login', () => {
   test('should return 200, user object, and session cookie if login is valid', async () => {
     const res = await api
-      .post('/v1/login')
+      .post('/login')
       .send({
         email: user1.email,
         password: user1.password
@@ -52,7 +52,7 @@ describe('POST /v1/login', () => {
 
   test('should return 401 if email does not exist in db', async () => {
     const res = await api
-      .post('/v1/login')
+      .post('/login')
       .send({
         email: user2.email,
         password: user2.password
@@ -64,7 +64,7 @@ describe('POST /v1/login', () => {
 
   test('should return 400 if email is not in request body', async () => {
     const res = await api
-      .post('/v1/login')
+      .post('/login')
       .send({
         username: user1.username,
         password: user1.password
@@ -76,7 +76,7 @@ describe('POST /v1/login', () => {
 
   test('should return 400 if email does not appear to be an email', async () => {
     const res = await api
-      .post('/v1/login')
+      .post('/login')
       .send({
         email: '123456',
         password: user1.password

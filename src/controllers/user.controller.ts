@@ -1,9 +1,6 @@
-import service from "../services/user.service";
 
 import { StatusCodes } from 'http-status-codes'
-import logger from '../utils/logger'
-import passport from 'passport';
-// import LocalStrategy from 'passport-local.Strategy';
+
 import { Middleware } from '../types/Express'
 import userService from '../services/user.service'
 
@@ -17,37 +14,31 @@ const getAll: Middleware = async (_req, res, _next) => {
   res.status(StatusCodes.OK).send({users})
 };
 
-const deleteAll: Middleware = async (_req, res, _next) => {
-  await userService.deleteAll();
+const removeAll: Middleware = async (_req, res, _next) => {
+  await userService.removeAll();
   res.status(StatusCodes.NO_CONTENT).send();
 };
 
-const getById: Middleware = async (req, res, _next) => {
-  const user = await userService.getById(req.params.id)
+const get: Middleware = async (req, res, _next) => {
+  const user = await userService.get(req.params.id)
   res.status(StatusCodes.OK).send({user})
 };
 
-const updateById: Middleware = async (req, res, _next) => {
-  const user = await userService.updateById(req.params.id, req.body)
+const update: Middleware = async (req, res, _next) => {
+  const user = await userService.update(req.params.id, req.body)
   res.status(StatusCodes.OK).send({user})
 };
 
-const deleteById: Middleware = async (req, res, _next) => {
-  await userService.deleteById(req.params.id)
+const remove: Middleware = async (req, res, _next) => {
+  await userService.remove(req.params.id)
   res.status(StatusCodes.NO_CONTENT).send()
 };
-
-const updateRoleById: Middleware = async (req, res, _next) => {
-  const user = await userService.updateRoleById(req.params.id, req.body)
-  res.status(StatusCodes.OK).send({user})
-}
 
 export default {
   create, 
   getAll,
-  deleteAll,
-  getById,
-  updateById,
-  deleteById,
-  updateRoleById
+  removeAll,
+  get,
+  update,
+  remove,
 }

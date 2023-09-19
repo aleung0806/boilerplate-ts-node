@@ -21,13 +21,13 @@ const user2 = {
 beforeEach(async () => {
   await mongoose.connect(config.mongoose.url)
   await User.deleteMany({})
-  await api.post('/v1/register').send(user1)
+  await api.post('/register').send(user1)
 })
 
-describe('POST /v1/register', () => {
+describe('POST /register', () => {
   test('should return 201 and return user on valid request', async () => {
     const res = await api
-      .post('/v1/register')
+      .post('/register')
       .send(user2)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -43,7 +43,7 @@ describe('POST /v1/register', () => {
 
   test('correct user created in db on valid request', async () => {
     const res = await api
-      .post('/v1/register')
+      .post('/register')
       .send(user2)
 
     const dbUser = await User.findOne({email: user1.email})
@@ -60,7 +60,7 @@ describe('POST /v1/register', () => {
 
   test('should return 400 if email is taken', async () => {
     const res = await api
-      .post('/v1/register')
+      .post('/register')
       .send({
         email: user1.email,
         username: user2.username,
@@ -73,7 +73,7 @@ describe('POST /v1/register', () => {
 
   test('should return 400 if username is not included', async () => {
     const res = await api
-      .post('/v1/register')
+      .post('/register')
       .send({
         email: user2.email,
         password: user2.password

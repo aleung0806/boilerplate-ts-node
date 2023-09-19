@@ -1,12 +1,12 @@
 import express from 'express'
-import authController from '../../controllers/auth.controller'
-import googleController from '../../controllers/google.controller'
+import authController from '../controllers/auth.controller'
+import googleController from '../controllers/google.controller'
 
-import authSchema from '../../middlewares/validationSchemas/auth.schema'
-import validate from '../../middlewares/validate'
-import passport from '../../middlewares/passport'
+import authSchema from '../middlewares/validationSchemas/auth.schema'
+import validate from '../middlewares/validate'
+import passport from '../middlewares/passport'
 const router = express.Router()
-import { authorize, loggedOutOnly, loggedInOnly }from '../../middlewares/authorize'
+import { authorize, loggedOutOnly, loggedInOnly }from '../middlewares/authorize'
 
 router.post('/login', loggedOutOnly, validate(authSchema.login), authController.login)
 router.post('/register', loggedOutOnly, validate(authSchema.register), authController.register)

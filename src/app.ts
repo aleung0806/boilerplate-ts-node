@@ -13,11 +13,11 @@ import passport from './middlewares/passport'
 import expressSession from "express-session";
 import config from './config/config'
 import { redisStore } from './db/redis';
-import authRouter from "./routes/v1/auth.route";
-import userRouter from './routes/v1/user.route';
-import roleRouter from './routes/v1/roles.route';
-import docsRouter from './routes/v1/docs.route';
-// import testRouter from "./routes/v1/test.route";
+import authRouter from "./routes/auth.route";
+import userRouter from './routes/user.route';
+// import roleRouter from './routes/roles.route';
+import docsRouter from './routes/docs.route';
+// import testRouter from "./routes/test.route";
 const cookieParser = require('cookie-parser')
 
 const app = express();
@@ -51,11 +51,9 @@ app.use(expressSession({
 }))
 app.use(passport.session());
 
-app.use('/v1', authRouter);
-app.use('/v1', userRouter);
-app.use('/v1', roleRouter);
-app.use('/v1', docsRouter);
-// app.use('/v1', testRouter);
+app.use(authRouter);
+app.use(userRouter);
+app.use(docsRouter);
 
 app.use(errorHandler)
 

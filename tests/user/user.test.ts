@@ -40,11 +40,11 @@ beforeEach(async () => {
   await User.insertMany(users)
 })
 
-describe('/v1/users', () => { 
-  describe('GET /v1/users', () => {
+describe('/users', () => { 
+  describe('GET /users', () => {
     test('should return all users on correct request', async () => {
       const res = await api
-        .get('/v1/users')
+        .get('/users')
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -58,10 +58,10 @@ describe('/v1/users', () => {
     }) 
   })
 
-  describe('POST /v1/users', () => {
+  describe('POST /users', () => {
     test('should create and return user on correct request', async () => {
       const res = await api
-      .post('/v1/users')
+      .post('/users')
       .send(newUser)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -84,12 +84,12 @@ describe('/v1/users', () => {
     }) 
   })
 
-  describe('GET /v1/users/:id', () => {
+  describe('GET /users/:id', () => {
     test('should get user on correct request', async () => {
       const user = await User.findOne({})
       if (user !== null){
         const res = await api
-          .get(`/v1/users/${user.id}`)
+          .get(`/users/${user.id}`)
           .expect(200)
 
         expect(res.body.user).toEqual({
@@ -102,14 +102,14 @@ describe('/v1/users', () => {
   
   })
   
-  describe('PATCH /v1/users/:id', () => {
+  describe('PATCH /users/:id', () => {
     test('should patch user on correct request', async () => {
       const user = await User.findOne({})
       const newUsername = 'brandNewUsername'
       
       if (user !== null){
         const res = await api
-          .patch(`/v1/users/${user.id}`)
+          .patch(`/users/${user.id}`)
           .send({id: user.id, username: newUsername})
           .expect(200)
 
@@ -131,10 +131,10 @@ describe('/v1/users', () => {
     }) 
   })
 
-  describe('DELETE /v1/users', () => {
+  describe('DELETE /users', () => {
     test('should delete users on correct request', async () => {
       const res = await api
-      .delete('/v1/users')
+      .delete('/users')
       .send(newUser)
       .expect(204)
 

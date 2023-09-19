@@ -23,16 +23,16 @@ beforeEach(async () => {
   await User.deleteMany({})
 })
 
-describe('POST /v1/logout', () => {
+describe('POST /logout', () => {
   // test('should return 204 on request with valid cookie', async () => {
   //   const loginRes = await api
-  //   .post('/v1/login')
+  //   .post('/login')
   //   .expect(204)
 
 
 
   //   const res = await api
-  //     .post('/v1/logout')
+  //     .post('/logout')
   //     .expect(204)
 
   //   expect(res.body.user).toBeUndefined()
@@ -40,7 +40,7 @@ describe('POST /v1/logout', () => {
 
   test('should return 401 if no cookie', async () => {
     const res = await api
-      .post('/v1/logout')
+      .post('/logout')
       .expect(401)
 
     expect(res.body.user).toBeUndefined()

@@ -1,52 +1,46 @@
-import service from "../services/user.service";
 
 import { StatusCodes } from 'http-status-codes'
-import logger from '../utils/logger'
-import passport from 'passport';
-// import LocalStrategy from 'passport-local.Strategy';
 import { Middleware } from '../types/Express'
-import userService from '../services/user.service'
 
-const create: Middleware = async (req, res, _next) => {
-  const user = await userService.create(req.body)
-  res.status(StatusCodes.CREATED).send({user})
-};
+export const customController = <_Type>(Service) => {
 
-const get: Middleware = async (req, res, _next) => {
-  const user = await userService.getById(req.params.id)
-  res.status(StatusCodes.OK).send({user})
-};
+  const create: Middleware = async (req, res, _next) => {
+    const resource = await Service.create(req.body)
+    res.status(StatusCodes.CREATED).send({resource})
+  };
 
-const getAll: Middleware = async (_req, res, _next) => {
-  const users = await userService.getAll()
-  res.status(StatusCodes.OK).send({users})
-};
+  const get: Middleware = async (req, res, _next) => {
+    const resource = await Service.get(req.params.id)
+    res.status(StatusCodes.OK).send({resource})
+  };
 
-const update: Middleware = async (req, res, _next) => {
-  const user = await userService.updateById(req.params.id, req.body)
-  res.status(StatusCodes.OK).send({user})
-};
+  const getAll: Middleware = async (_req, res, _next) => {
+    const resources = await Service.getAll()
+    res.status(StatusCodes.OK).send({resources})
+  };
 
-const remove: Middleware = async (req, res, _next) => {
-  await userService.deleteById(req.params.id)
-  res.status(StatusCodes.NO_CONTENT).send()
-}
+  const update: Middleware = async (req, res, _next) => {
+    const resource = await Service.update(req.params.id, req.body)
+    res.status(StatusCodes.OK).send({resource})
+  };
 
-const removeAll: Middleware = async (_req, res, _next) => {
-  await userService.deleteAll();
-  res.status(StatusCodes.NO_CONTENT).send();
-};
+  const remove: Middleware = async (req, res, _next) => {
+    await Service.remove(req.params.id)
+    res.status(StatusCodes.NO_CONTENT).send()
+  }
 
-// const updateRoleById: Middleware = async (req, res, _next) => {
-//   const user = await userService.updateRoleById(req.params.id, req.body)
-//   res.status(StatusCodes.OK).send({user})
-// }
+  const removeAll: Middleware = async (_req, res, _next) => {
+    await Service.removeAll();
+    res.status(StatusCodes.NO_CONTENT).send();
+  };
 
-export default {
-  create, 
-  get, 
-  getAll,
-  update,
-  remove,
-  removeAll
+  return {
+    create, 
+    get, 
+    getAll,
+    update,
+    remove,
+    removeAll
+  }
+
 }

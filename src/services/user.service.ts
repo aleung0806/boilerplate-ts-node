@@ -22,7 +22,7 @@ const getAll = async (): Promise<Array<User>> => {
   return users
 }
 
-const getById = async (id: string): Promise<User> => {
+const get = async (id: string): Promise<User> => {
 
   const user = await catchDbError(UserModel.findById(id))
 
@@ -33,7 +33,7 @@ const getById = async (id: string): Promise<User> => {
   return user
 }
 
-const updateById = async (id: string, update: User): Promise<User>=> {
+const update = async (id: string, update: User): Promise<User>=> {
   const user = await UserModel.findByIdAndUpdate(id, update, {new: true})
   if (user === null){
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
@@ -41,7 +41,7 @@ const updateById = async (id: string, update: User): Promise<User>=> {
   return user
 }
 
-const deleteById = async (id: string): Promise<void> => {
+const remove = async (id: string): Promise<void> => {
   const user = await UserModel.findByIdAndRemove(id)
   if (!user){
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
@@ -49,27 +49,18 @@ const deleteById = async (id: string): Promise<void> => {
   
 }
 
-const deleteAll = async (): Promise<void> => {
+const removeAll = async (): Promise<void> => {
   const result = await UserModel.deleteMany({})
   if (result.deletedCount === 0){
     throw new ApiError(StatusCodes.NOT_FOUND, 'Users not found.')
   }
 }
 
-const updateRoleById = async (id: string, role: string): Promise<User | null> => {
-  const user = await UserModel.findByIdAndUpdate(id, {role}, {new: true})
-  if (!user){
-    throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
-  }
-  return user
-}
-
 export default {
   create, 
   getAll,
-  deleteAll,
-  getById,
-  updateById,
-  deleteById,
-  updateRoleById
+  removeAll,
+  get,
+  update,
+  remove,
 }
