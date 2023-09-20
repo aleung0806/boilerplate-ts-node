@@ -17,9 +17,21 @@ const getProject = async (id: string): Promise<Project> => {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
   }
   const lists = await catchDbError(ListModel.find({projectId: project.id}))
-  const roles = await catchDbError(ProjectRoleModel.find({projectId: project.id}))
+  const usersDoc = await catchDbError(ProjectRoleModel.find({projectId: project.id}).populate('userId').select('role userId'))
+  const users = usersDoc.map((user) => {
+    const {role, userId, id} = user.toObject()
+    return {
+      role, 
+      roleId: id, 
+      user: {
+        username: userId.username,
+        email: userId.email,
+        id: userId.id
+      }
+    }
+  })
 
-  return {...project.toObject(), lists, roles}
+  return {...project.toObject(), lists, users}
 }
 
 
