@@ -1,7 +1,6 @@
 import { Schema, Model, Document, model } from 'mongoose';
 
 import { Issue }from '../types/Jira'
-
 import ProjectModel from './project.model'
 import ListModel from './list.model'
 import UserModel from './user.model'
@@ -24,7 +23,7 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
       listId: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'List',
+        ref: ListModel,
       },
       description: {
         type: String, 

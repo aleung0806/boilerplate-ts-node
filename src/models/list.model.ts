@@ -21,8 +21,7 @@ const listSchema = new Schema<List, ListModel, ListMethods>(
       },
       issueOrder: [{
         type: Schema.Types.ObjectId,
-        required: true,
-        ref: IssueModel,
+        ref: 'Issue',
       }]
     },
 
