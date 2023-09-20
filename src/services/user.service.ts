@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
 import { User } from '../types/User'
 import { catchDbError } from '../utils/catchDbError'
+import { projectService } from './jira.service';
 
 
 const create = async (user: User): Promise<User> => {
@@ -30,7 +31,12 @@ const get = async (id: string): Promise<User> => {
   if (!user){
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
   }
-  const projects = await catchDbError(ProjectRoleModel.find({userId: id}).populate('projectId'))
+  const projectDocuments = await catchDbError(ProjectRoleModel.find({userId: id}).populate('projectId').select('role projectId'))
+  
+  const projects = projectDocuments.map((project) => {
+    const {projectId, id, ...rest } = project.toObject()
+    return {...rest, roleId: id, title: projectId.title, projectId: projectId.id}
+  })
 
   return {...user.toObject(), projects}
 }
