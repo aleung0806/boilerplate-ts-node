@@ -1,5 +1,6 @@
 import { RoleSchema } from './Role'
 import { z } from 'zod'
+import { ObjectId } from 'mongoose';
 
 
 export const UserDocumentSchema = z.object({
@@ -7,7 +8,8 @@ export const UserDocumentSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.'}),
   password: z.string().min(8, { message: 'Password must be 8 or more characters'}),
   username: z.string(),
-  roles: z.array(RoleSchema)
+  roles: z.array(RoleSchema),
+  favoriteProject: z.custom<ObjectId>(),
 })
 
 export const UserSchema = UserDocumentSchema.omit({password: true})

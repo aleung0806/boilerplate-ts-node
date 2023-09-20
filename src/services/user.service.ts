@@ -1,15 +1,18 @@
 import UserModel from '../models/user.model';
+import ProjectRoleModel from '../models/projectRole.model';
+
 import logger from '../utils/logger';
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
 import { User } from '../types/User'
 import { catchDbError } from '../utils/catchDbError'
 
+
 const create = async (user: User): Promise<User> => {
   if (await UserModel.emailExists(user.email)) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Email is already taken.')
   }
-  const createdUser = await UserModel.create(user)
+  const createdUser = await catchDbError(UserModel.create(user))
 
   return createdUser
 }
@@ -23,14 +26,13 @@ const getAll = async (): Promise<Array<User>> => {
 }
 
 const get = async (id: string): Promise<User> => {
-
   const user = await catchDbError(UserModel.findById(id))
-
   if (!user){
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
   }
+  const projects = await catchDbError(ProjectRoleModel.find({userId: id}).populate('projectId'))
 
-  return user
+  return {...user.toObject(), projects}
 }
 
 const update = async (id: string, update: User): Promise<User>=> {
@@ -46,7 +48,6 @@ const remove = async (id: string): Promise<void> => {
   if (!user){
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
   }
-  
 }
 
 const removeAll = async (): Promise<void> => {

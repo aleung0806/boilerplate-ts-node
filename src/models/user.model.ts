@@ -5,6 +5,7 @@ import config from '../config/config';
 import { UserDocument, User }from '../types/User'
 import { uniqueId } from 'lodash';
 import { redisClient } from 'src/db/redis';
+import ProjectModel from './project.model'
 
 interface UserMethods {
   passwordMatches(password:string):Promise<string>
@@ -40,7 +41,12 @@ const userSchema = new Schema<UserDocument, UserModel, UserMethods>(
       roles: {
         type: [ {type: String }],
         default: ['owner']
-      }
+      },
+      favoriteProject: {
+        type: Schema.Types.ObjectId,
+        default: null,
+        ref: ProjectModel,
+      },
     },
     {
       timestamps: true,
