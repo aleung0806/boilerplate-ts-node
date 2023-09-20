@@ -12,6 +12,8 @@ router.post('/login', loggedOutOnly, validate(authSchema.login), authController.
 router.post('/register', loggedOutOnly, validate(authSchema.register), authController.register)
 router.post('/logout', loggedInOnly, validate(authSchema.logout), authController.logout)
 router.get('/verify', authController.verify)
+router.get('/refresh', authController.refresh)
+
 
 router.post('/google', googleController.login)
 router.get('/google/callback', googleController.callback)

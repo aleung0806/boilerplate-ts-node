@@ -44,7 +44,6 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
       },
       assigneeId: {
         type: Schema.Types.ObjectId,
-        required: true,
         ref: UserModel,
       },
       creatorId: {

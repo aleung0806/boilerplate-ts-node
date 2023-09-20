@@ -46,27 +46,22 @@ export const verify: Middleware = async (req, res, _next) => {
   if (req.isAuthenticated()){
     return res.status(200).send(req.user)
   }
-
   return res.sendStatus(204)
 
 };
 
-
-export const success: Middleware = async (req, res, _next) => {
-  if (req.user){
-    res.status(200).send(req.user)
-  }else{
-    res.status(200).send('No User')
+export const refresh: Middleware = async (req, res, _next) => {
+  if (req.isAuthenticated()){
+    const updatedUser = await userService.get(req.user.id)
+    req.login(updatedUser, () => {
+      res.status(204).send(updatedUser)
+    })
   }
+  //return res.sendStatus(204)
+
 };
 
-export const failure: Middleware = async (req, res, _next) => {
-  if (req.user){
-    res.status(200).send(req.user)
-  }else{
-    res.status(200).send('No User')
-  }
-};
+
 
 export default {
 
@@ -74,5 +69,6 @@ export default {
   login,
   logout,
   verify,
+  refresh
 
 }

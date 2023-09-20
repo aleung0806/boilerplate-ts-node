@@ -21,22 +21,31 @@ const getProject = async (id: string): Promise<Project> => {
   const users = usersDoc.map((user) => {
     const {role, userId, id} = user.toObject()
     return {
+      id: userId.id,
+      username: userId.username,
+      email: userId.email,
       role, 
       roleId: id, 
-      user: {
-        username: userId.username,
-        email: userId.email,
-        id: userId.id
-      }
     }
   })
 
   return {...project.toObject(), lists, users}
 }
 
+const removeProject = async (id: string): Promise<void> => {
+  const resource = await ProjectModel.findByIdAndRemove(id)
+  if (!resource){
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
+  }
+  await catchDbError(ProjectRoleModel.deleteMany({projectId: id}))
+
+}
+
 
 export const projectService = customService<Project>(ProjectModel)
 projectService.get = getProject
+projectService.remove = removeProject
+
 export const listService = customService<List>(ListModel)
 export const issueService = customService<Issue>(IssueModel)
 export const projectRoleService = customService<ProjectRole>(ProjectRoleModel)

@@ -32,12 +32,20 @@ const get = async (id: string): Promise<User> => {
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found.')
   }
   const projectDocs = await catchDbError(ProjectRoleModel.find({userId: id}).populate('projectId').select('role projectId'))
-  
+  console.log('id1', projectDocs)
+
   const projects = projectDocs.map((project) => {
     const {projectId, id, ...rest } = project.toObject()
-    return {...rest, roleId: id, title: projectId.title, projectId: projectId.id}
-  })
+    console.log('id3', project)
 
+    return {
+      id: projectId.id, 
+      title: projectId.title,
+      ...rest, 
+      roleId: id,  
+    }
+  })
+  console.log('id2', id)
   return {...user.toObject(), projects}
 }
 

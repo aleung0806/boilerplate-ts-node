@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../utils/ApiError'
 import { User } from '../types/User'
+import userService from './user.service'
 import UserModel from '../models/user.model'
 import AccountModel from '../models/account.model'
 import logger from '../utils/logger'
@@ -9,7 +10,8 @@ export const verifyPassword = async (email: string, password: string): Promise<U
   const user = await UserModel.findOne({email})
   if (user){
     if (await user.passwordMatches(password)) {
-      return user
+      const userInfo = await userService.get(user.toObject().id)
+      return userInfo
     }
   }
   return null
