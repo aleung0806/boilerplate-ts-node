@@ -43,6 +43,7 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
       },
       assigneeId: {
         type: Schema.Types.ObjectId,
+        default: null,
         ref: UserModel,
       },
       creatorId: {

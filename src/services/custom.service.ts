@@ -31,6 +31,7 @@ export const customService = <Type>(Model) => {
   }
 
   const update = async (id: string, update: Type): Promise<Type>=> {
+    console.log(update)
     const resource = await Model.findByIdAndUpdate(id, update, {new: true})
     if (resource === null){
       throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')

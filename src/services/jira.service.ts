@@ -16,8 +16,15 @@ const getProject = async (id: string): Promise<Project> => {
   if (!project){
     throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
   }
-  const lists = await catchDbError(ListModel.find({projectId: project.id}).populate('issueOrder'))
-  console.log('lists', lists)
+  const listsDoc = await catchDbError(ListModel.find({projectId: project.id}).populate('issueOrder'))
+  const lists = listsDoc.map((list) => {
+      const {issueOrder, ...rest} = list.toObject()
+      return {
+        ...rest,
+        issues: issueOrder
+      }
+  })
+
   const usersDoc = await catchDbError(ProjectRoleModel.find({projectId: project.id}).populate('userId').select('role userId'))
   const users = usersDoc.map((user) => {
     const {role, userId, id} = user.toObject()
@@ -41,9 +48,7 @@ const removeProject = async (id: string): Promise<void> => {
   await catchDbError(ProjectRoleModel.deleteMany({projectId: id}))
   await catchDbError(ListModel.deleteMany({projectId: id}))
   await catchDbError(IssueModel.deleteMany({projectId: id}))
-
 }
-
 
 export const projectService = customService<Project>(ProjectModel)
 projectService.get = getProject
