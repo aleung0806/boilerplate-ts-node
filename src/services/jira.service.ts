@@ -41,7 +41,7 @@ const getProject = async (id: string): Promise<Project> => {
 }
 
 const removeProject = async (id: string): Promise<void> => {
-  const resource = await ProjectModel.findByIdAndRemove(id)
+  const resource = await catchDbError(ProjectModel.findByIdAndRemove(id))
   if (!resource){
     throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
   }
@@ -50,11 +50,22 @@ const removeProject = async (id: string): Promise<void> => {
   await catchDbError(IssueModel.deleteMany({projectId: id}))
 }
 
+const removeList = async (id: string): Promise<void> => {
+  const resource = await catchDbError(ListModel.findByIdAndRemove(id))
+  await catchDbError(IssueModel.deleteMany({listId: id}))
+
+  if (!resource){
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
+  }
+  
+}
+
 export const projectService = customService<Project>(ProjectModel)
 projectService.get = getProject
 projectService.remove = removeProject
 
 export const listService = customService<List>(ListModel)
+listService.remove = removeList
 
 export const issueService = customService<Issue>(IssueModel)
 export const projectRoleService = customService<ProjectRole>(ProjectRoleModel)

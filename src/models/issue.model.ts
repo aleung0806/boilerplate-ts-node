@@ -56,7 +56,7 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
       timestamps: true,
       'toJSON': {
         transform: (_doc: Issue, ret: any, _options): Issue => {
-          const { _id, createdAt, updatedAt, __v, ...rest } = ret
+          const { _id,  __v, ...rest } = ret
           ret = rest
           ret.id = _id
           return ret
@@ -64,7 +64,7 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
       },
       'toObject': {
         transform: (_doc: Issue, ret: any, _options): Issue => {
-          const { _id, createdAt, updatedAt, __v, ...rest } = ret
+          const { _id, __v, ...rest } = ret
           ret = rest
           ret.id = _id
           return ret
