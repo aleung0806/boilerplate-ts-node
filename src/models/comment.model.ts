@@ -8,16 +8,6 @@ import { Comment } from '../types/Jira'
 
 const commentSchema = new Schema<Comment>({
 
-  projectId: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: ProjectModel,
-  },
-  listId: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: ListModel,
-  },
   issueId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -28,7 +18,7 @@ const commentSchema = new Schema<Comment>({
     required: true,
     ref: User,
   },
-  comment: {
+  text: {
     type: String,
     required: true,
   }

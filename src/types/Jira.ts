@@ -41,11 +41,9 @@ export type ProjectRole = z.infer<typeof ProjectRoleSchema>;
 
 export const CommentSchema = z.object({
   id: z.custom<ObjectId>(),
-  projectId: z.custom<ObjectId>(),
-  listId: z.custom<ObjectId>(),
   issueId: z.custom<ObjectId>(),
   userId: z.custom<ObjectId>(),
-  comment: z.string()
+  text: z.string()
 })
 export type Comment = z.infer<typeof CommentSchema>;
 

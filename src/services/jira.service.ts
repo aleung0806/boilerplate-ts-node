@@ -69,11 +69,24 @@ const getIssue = async (id: string): Promise<Issue> => {
   if (!issue){
     throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
   }
-  const comments = await catchDbError(CommentModel.find({issueId: issue.id}))
-  
+  const commentsDoc = await catchDbError(CommentModel.find({issueId: issue.id}).populate('userId'))
+  const comments = commentsDoc.map((list) => {
+    const {userId, ...rest} = list.toObject()
+    return {
+      ...rest,
+      user: userId
+    }
+})
+
   return {...issue.toObject(), comments}
 }
-
+const removeIssue = async (id: string): Promise<void> => {
+  const resource = await catchDbError(IssueModel.findByIdAndRemove(id))
+  if (!resource){
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
+  }
+  await catchDbError(CommentModel.deleteMany({issueId: id}))  
+}
 export const projectService = customService<Project>(ProjectModel)
 projectService.get = getProject
 projectService.remove = removeProject
@@ -82,6 +95,8 @@ export const listService = customService<List>(ListModel)
 listService.remove = removeList
 
 export const issueService = customService<Issue>(IssueModel)
+issueService.remove = removeIssue
+issueService.get = getIssue
 export const projectRoleService = customService<ProjectRole>(ProjectRoleModel)
 export const commentService = customService<ProjectRole>(CommentModel)
 
