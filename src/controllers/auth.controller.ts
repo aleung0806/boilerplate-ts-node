@@ -36,8 +36,10 @@ export const logout: Middleware = async (req, res, next) => {
 export const register: Middleware = async (req, res, _next) => {
   console.log('registering', req.body)
   const user = await userService.create(req.body)
-  req.login(user, () => {
-    res.status(StatusCodes.CREATED).send(user)
+  const userInfo = await userService.get(user.id)
+
+  req.login(userInfo, () => {
+    res.status(StatusCodes.CREATED).send(userInfo)
   })
 };
 

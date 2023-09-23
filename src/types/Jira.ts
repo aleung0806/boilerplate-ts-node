@@ -39,6 +39,16 @@ export const ProjectRoleSchema = z.object({
 })
 export type ProjectRole = z.infer<typeof ProjectRoleSchema>;
 
+export const CommentSchema = z.object({
+  id: z.custom<ObjectId>(),
+  projectId: z.custom<ObjectId>(),
+  listId: z.custom<ObjectId>(),
+  issueId: z.custom<ObjectId>(),
+  userId: z.custom<ObjectId>(),
+  comment: z.string()
+})
+export type Comment = z.infer<typeof CommentSchema>;
+
 export const UserDocumentSchema = z.object({
   id: z.string().uuid(),
   email: z.string().email({ message: 'Invalid email address.'}),

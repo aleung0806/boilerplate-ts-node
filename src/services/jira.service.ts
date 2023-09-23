@@ -9,6 +9,7 @@ import ProjectModel from '../models/project.model'
 import ListModel from '../models/list.model'
 import IssueModel from '../models/issue.model'
 import ProjectRoleModel from '../models/projectRole.model'
+import CommentModel from '../models/comment.model'
 
 
 const getProject = async (id: string): Promise<Project> => {
@@ -48,16 +49,29 @@ const removeProject = async (id: string): Promise<void> => {
   await catchDbError(ProjectRoleModel.deleteMany({projectId: id}))
   await catchDbError(ListModel.deleteMany({projectId: id}))
   await catchDbError(IssueModel.deleteMany({projectId: id}))
+  await catchDbError(CommentModel.deleteMany({projectId: id}))
+
 }
 
 const removeList = async (id: string): Promise<void> => {
   const resource = await catchDbError(ListModel.findByIdAndRemove(id))
   await catchDbError(IssueModel.deleteMany({listId: id}))
+  await catchDbError(CommentModel.deleteMany({listId: id}))
 
   if (!resource){
     throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
   }
   
+}
+
+const getIssue = async (id: string): Promise<Issue> => {
+  const issue = await catchDbError(IssueModel.findById(id))
+  if (!issue){
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
+  }
+  const comments = await catchDbError(CommentModel.find({issueId: issue.id}))
+  
+  return {...issue.toObject(), comments}
 }
 
 export const projectService = customService<Project>(ProjectModel)
@@ -69,5 +83,6 @@ listService.remove = removeList
 
 export const issueService = customService<Issue>(IssueModel)
 export const projectRoleService = customService<ProjectRole>(ProjectRoleModel)
+export const commentService = customService<ProjectRole>(CommentModel)
 
 
