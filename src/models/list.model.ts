@@ -18,8 +18,11 @@ const listSchema = new Schema<List, ListModel, ListMethods>(
         type: Schema.Types.ObjectId,
         required: true,
         ref: ProjectModel,
-      }
-
+      },
+      issueOrder: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Issue',
+      }]
     },
 
     {

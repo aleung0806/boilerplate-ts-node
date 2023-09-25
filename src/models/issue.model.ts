@@ -25,10 +25,6 @@ const issueSchema = new Schema<Issue, IssueModel, IssueMethods>(
         required: true,
         ref: ListModel,
       },
-      listIndex: {
-        type: Number,
-        required: true,
-      },
       description: {
         type: String, 
         trim: true,

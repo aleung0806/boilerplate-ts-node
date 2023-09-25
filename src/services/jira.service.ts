@@ -17,32 +17,14 @@ const getProject = async (id: string): Promise<Project> => {
   if (!project){
     throw new ApiError(StatusCodes.NOT_FOUND, 'Not found.')
   }
-  const listsDoc = await catchDbError(ListModel.find({projectId: project.id}))
-  const issuesDoc = await catchDbError(IssueModel.find({projectId: project.id}))
-  const issues = issuesDoc.map(issue => issue.toObject())
-
-  const lists = listsDoc.map((listDoc) => {
-    let list = listDoc.toObject()
-    let sortedIssues: any[] = []
-
-
-    let index = issues.findIndex((issue) => {
-      return issue.listId.equals(list.id) && issue.listIndex === sortedIssues.length
-    })
-    while (index !== -1){
-      let issue = issues[index]
-      issues.splice(index, 1)
-      sortedIssues.push(issue)
-      index = issues.findIndex((issue) => {
-        return issue.listId.equals(list.id) && issue.listIndex === sortedIssues.length
-      })
-    }
-    return {
-      ...list,
-      issues: sortedIssues
-    }
+  const listsDoc = await catchDbError(ListModel.find({projectId: project.id}).populate('issueOrder'))
+  const lists = listsDoc.map((list) => {
+      const {issueOrder, ...rest} = list.toObject()
+      return {
+        ...rest,
+        issues: issueOrder
+      }
   })
-  console.log('lists', lists)
 
   const usersDoc = await catchDbError(ProjectRoleModel.find({projectId: project.id}).populate('userId').select('role userId'))
   const users = usersDoc.map((user) => {
