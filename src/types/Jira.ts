@@ -20,6 +20,7 @@ export const IssueSchema = z.object({
   id: z.custom<ObjectId>(),
   title: z.string(),
   listId: z.custom<ObjectId>(),
+  listIndex: z.number(),
   projectId: z.custom<ObjectId>(),
   description: z.string(),
   type: z.string(),
