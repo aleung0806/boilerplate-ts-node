@@ -1,8 +1,7 @@
 import { string } from 'joi'
 import { zipObject } from 'lodash'
 import { z } from 'zod'
-import { UserDocumentSchema, UserSchema } from '../../types/User'
-
+import { PartialUserSchema, UserDocumentSchema, UserSchema } from '../../types/User'
 
 const create = z.object({
   params: z.object({}),
@@ -41,7 +40,7 @@ const update = z.object({
   params: z.object({
     id: z.string()
   }),
-  body: UserSchema
+  body: PartialUserSchema
 })
 
 

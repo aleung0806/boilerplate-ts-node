@@ -22,7 +22,6 @@ const cookieParser = require('cookie-parser')
 
 import {projectRouter} from './routes/jira.route'
 
-
 const app = express();
 app.use(helmet());
 app.use(express.json());

@@ -13,6 +13,7 @@ export const UserDocumentSchema = z.object({
 })
 
 export const UserSchema = UserDocumentSchema.omit({password: true})
+export const PartialUserSchema = UserSchema.partial()
 
 export type User = z.infer<typeof UserSchema>;
 export type UserDocument = z.infer<typeof UserDocumentSchema>;
